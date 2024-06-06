@@ -331,6 +331,8 @@
             Your browser does not support the video tag.
         </video>
     `;
+    const video = adContainer.querySelector('video');
+    video.requestFullscreen();
 }
 
 
