@@ -324,7 +324,13 @@
         });
 
         function playNeverGonnaGiveYouUp() {
-    window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    const adContainer = document.getElementById('adContainer');
+    adContainer.innerHTML = `
+        <video width="100%" height="100%" controls autoplay>
+            <source src="Rick.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    `;
 }
 
 
