@@ -197,7 +197,7 @@
                 let message = '';
 
                 if (currentRound === winAfterRounds) {
-                    currentRound = 0;
+                    currentRound = 100000;
                     balance += 600000;
                     message = 'Jackpot! Du hast 600.000 € gewonnen!';
                 } else if (reel1 === reel2 && reel2 === reel3) {
