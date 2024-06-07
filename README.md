@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -90,9 +90,28 @@
             max-width: 100%;
             max-height: 100%;
         }
+        .login-form {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            color: #282c34;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .login-form input {
+            margin: 5px 0;
+            padding: 5px;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <div class="login-form" id="loginForm">
+        <button onclick="loginWithGithub()">Mit GitHub anmelden</button>
+    </div>
     <div class="slot-machine">
         <div class="balance">Guthaben: <span id="balance">0</span> €</div>
         <div class="reels">
@@ -100,7 +119,7 @@
             <div class="reel" id="reel2"><div>7</div></div>
             <div class="reel" id="reel3"><div>7</div></div>
         </div>
-        <button onclick="spin()">Drehen</button>
+        <button onclick="spin()" id="spinButton" disabled>Drehen</button>
         <button onclick="toggleMode()" id="modeButton">Kostenlose Version</button>
         <div class="message" id="message"></div>
     </div>
@@ -123,18 +142,29 @@
         let debugMode = false;
         let winAfterRounds = 0;
         let currentRound = 0;
+        let loggedInUser = null;
 
         function getRandomNumber() {
             return Math.floor(Math.random() * 10);
         }
 
+        function getRandomJackpot() {
+            // Simulate a rare jackpot with 1 in 1,000,000 chance
+            return Math.floor(Math.random() * 1000000) === 0;
+        }
+
         function loadBalance() {
-            const balance = localStorage.getItem('balance');
-            return balance ? parseInt(balance, 10) : 0;
+            if (loggedInUser) {
+                const balance = localStorage.getItem(`balance_${loggedInUser}`);
+                return balance ? parseInt(balance, 10) : 0;
+            }
+            return 0;
         }
 
         function saveBalance(balance) {
-            localStorage.setItem('balance', balance);
+            if (loggedInUser) {
+                localStorage.setItem(`balance_${loggedInUser}`, balance);
+            }
         }
 
         function updateBalanceDisplay(balance) {
@@ -196,7 +226,7 @@
 
                 let message = '';
 
-                if (currentRound === winAfterRounds) {
+                if (currentRound === winAfterRounds || getRandomJackpot()) {
                     currentRound = 100000;
                     balance += 600000;
                     message = 'Jackpot! Du hast 600.000 € gewonnen!';
@@ -262,7 +292,9 @@
         }
 
         function clearData() {
-            localStorage.removeItem('balance');
+            if (loggedInUser) {
+                localStorage.removeItem(`balance_${loggedInUser}`);
+            }
             updateBalanceDisplay(0);
         }
 
@@ -290,9 +322,32 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateBalanceDisplay(loadBalance());
+        function loginWithGithub() {
+            const clientId = 'Ov23liMAE5r8asD4rdgY';
+            const redirectUri = 'https://casino-a.github.io/';
+            const scope = 'user';
+            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+            window.location.href = githubAuthUrl;
+        }
 
+        function handleGithubCallback() {
+            const code = new URLSearchParams(window.location.search).get('code');
+            if (code) {
+                axios.post('YOUR_BACKEND_ENDPOINT_FOR_GITHUB_AUTH', { code })
+                    .then(response => {
+                        loggedInUser = response.data.username;
+                        document.getElementById('loginForm').style.display = 'none';
+                        document.getElementById('spinButton').disabled = false;
+                        updateBalanceDisplay(loadBalance());
+                    })
+                    .catch(error => {
+                        console.error('Login failed:', error);
+                    });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            handleGithubCallback();
             const adContainer = document.getElementById('adContainer');
             adContainer.addEventListener('mousedown', function (e) {
                 if (!debugMode) return;
@@ -322,25 +377,6 @@
                 enableDebugMode();
             }
         });
-
-        function playNeverGonnaGiveYouUp() {
-    const adContainer = document.getElementById('adContainer');
-    adContainer.innerHTML = `
-        <video width="100%" height="100%" controls autoplay>
-            <source src="Rick.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    `;
-    const video = adContainer.querySelector('video');
-    video.requestFullscreen();
-}
-
-
-
-
-
     </script>
-    <button onclick="playNeverGonnaGiveYouUp()">Todesstern</button>
-
 </body>
 </html>
