@@ -1,3 +1,4 @@
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -89,29 +90,9 @@
             max-width: 100%;
             max-height: 100%;
         }
-        .login-form {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            background-color: #fff;
-            color: #282c34;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .login-form input {
-            margin: 5px 0;
-            padding: 5px;
-        }
     </style>
 </head>
 <body>
-    <div class="login-form" id="loginForm">
-        <input type="text" id="username" placeholder="Benutzername">
-        <input type="password" id="password" placeholder="Passwort">
-        <button onclick="login()">Anmelden</button>
-    </div>
     <div class="slot-machine">
         <div class="balance">Guthaben: <span id="balance">0</span> €</div>
         <div class="reels">
@@ -142,24 +123,18 @@
         let debugMode = false;
         let winAfterRounds = 0;
         let currentRound = 0;
-        let loggedInUser = null;
 
         function getRandomNumber() {
             return Math.floor(Math.random() * 10);
         }
 
         function loadBalance() {
-            if (loggedInUser) {
-                const balance = localStorage.getItem(`balance_${loggedInUser}`);
-                return balance ? parseInt(balance, 10) : 0;
-            }
-            return 0;
+            const balance = localStorage.getItem('balance');
+            return balance ? parseInt(balance, 10) : 0;
         }
 
         function saveBalance(balance) {
-            if (loggedInUser) {
-                localStorage.setItem(`balance_${loggedInUser}`, balance);
-            }
+            localStorage.setItem('balance', balance);
         }
 
         function updateBalanceDisplay(balance) {
@@ -287,9 +262,7 @@
         }
 
         function clearData() {
-            if (loggedInUser) {
-                localStorage.removeItem(`balance_${loggedInUser}`);
-            }
+            localStorage.removeItem('balance');
             updateBalanceDisplay(0);
         }
 
@@ -317,19 +290,9 @@
             }
         }
 
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username && password) {
-                loggedInUser = username;
-                document.getElementById('loginForm').style.display = 'none';
-                updateBalanceDisplay(loadBalance());
-            } else {
-                alert('Bitte Benutzername und Passwort eingeben.');
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
+            updateBalanceDisplay(loadBalance());
+
             const adContainer = document.getElementById('adContainer');
             adContainer.addEventListener('mousedown', function (e) {
                 if (!debugMode) return;
@@ -355,10 +318,17 @@
 
         // Press 'D' to toggle debug mode
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'd' || e.key === 'D') {
+            if (e.key === '#' || e.key === '#') {
                 enableDebugMode();
             }
         });
+
+        
+
+
+
     </script>
+    <button onclick="playNeverGonnaGiveYouUp()">Todesstern</button>
+
 </body>
 </html>
