@@ -1,4 +1,3 @@
-
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -106,11 +105,12 @@
             padding: 5px;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="login-form" id="loginForm">
-        <button onclick="loginWithGithub()">Mit GitHub anmelden</button>
+        <input type="text" id="username" placeholder="Benutzername">
+        <input type="password" id="password" placeholder="Passwort">
+        <button onclick="login()">Anmelden</button>
     </div>
     <div class="slot-machine">
         <div class="balance">Guthaben: <span id="balance">0</span> €</div>
@@ -119,7 +119,7 @@
             <div class="reel" id="reel2"><div>7</div></div>
             <div class="reel" id="reel3"><div>7</div></div>
         </div>
-        <button onclick="spin()" id="spinButton" disabled>Drehen</button>
+        <button onclick="spin()">Drehen</button>
         <button onclick="toggleMode()" id="modeButton">Kostenlose Version</button>
         <div class="message" id="message"></div>
     </div>
@@ -146,11 +146,6 @@
 
         function getRandomNumber() {
             return Math.floor(Math.random() * 10);
-        }
-
-        function getRandomJackpot() {
-            // Simulate a rare jackpot with 1 in 1,000,000 chance
-            return Math.floor(Math.random() * 1000000) === 0;
         }
 
         function loadBalance() {
@@ -226,7 +221,7 @@
 
                 let message = '';
 
-                if (currentRound === winAfterRounds || getRandomJackpot()) {
+                if (currentRound === winAfterRounds) {
                     currentRound = 100000;
                     balance += 600000;
                     message = 'Jackpot! Du hast 600.000 € gewonnen!';
@@ -322,32 +317,19 @@
             }
         }
 
-        function loginWithGithub() {
-            const clientId = 'Ov23liMAE5r8asD4rdgY';
-            const redirectUri = 'https://casino-a.github.io/';
-            const scope = 'user';
-            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-            window.location.href = githubAuthUrl;
-        }
-
-        function handleGithubCallback() {
-            const code = new URLSearchParams(window.location.search).get('code');
-            if (code) {
-                axios.post('YOUR_BACKEND_ENDPOINT_FOR_GITHUB_AUTH', { code })
-                    .then(response => {
-                        loggedInUser = response.data.username;
-                        document.getElementById('loginForm').style.display = 'none';
-                        document.getElementById('spinButton').disabled = false;
-                        updateBalanceDisplay(loadBalance());
-                    })
-                    .catch(error => {
-                        console.error('Login failed:', error);
-                    });
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                loggedInUser = username;
+                document.getElementById('loginForm').style.display = 'none';
+                updateBalanceDisplay(loadBalance());
+            } else {
+                alert('Bitte Benutzername und Passwort eingeben.');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            handleGithubCallback();
             const adContainer = document.getElementById('adContainer');
             adContainer.addEventListener('mousedown', function (e) {
                 if (!debugMode) return;
