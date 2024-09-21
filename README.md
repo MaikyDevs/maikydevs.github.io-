@@ -197,7 +197,7 @@
                 let message = '';
 
                 if (currentRound === winAfterRounds) {
-                    currentRound = 100000;
+                    currentRound = 0;
                     balance += 600000;
                     message = 'Jackpot! Du hast 600.000 € gewonnen!';
                 } else if (reel1 === reel2 && reel2 === reel3) {
@@ -318,17 +318,10 @@
 
         // Press 'D' to toggle debug mode
         document.addEventListener('keydown', function (e) {
-            if (e.key === '#' || e.key === '#') {
+            if (e.key === 'd' || e.key === 'D') {
                 enableDebugMode();
             }
         });
-
-        
-
-
-
     </script>
-    <button onclick="playNeverGonnaGiveYouUp()">Todesstern</button>
-
 </body>
 </html>
