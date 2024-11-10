@@ -1,206 +1,272 @@
 
-<html lang="de">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe - Lokales Spiel</title>
+    <title>Tic Tac Toe vs Bot</title>
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
             max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
             text-align: center;
         }
-
-        h1 {
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
+        #game-container {
+            display: none;
         }
-
-        .game-status {
-            font-size: 1.4em;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            background: rgba(0,0,0,0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin: 10px 0;
-        }
-
-        .game-board {
+        .board {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
             margin: 20px auto;
-            max-width: 400px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
+            width: 310px;
         }
-
         .cell {
             width: 100px;
             height: 100px;
-            border: none;
-            border-radius: 10px;
-            font-size: 2.5em;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.9);
-            transition: all 0.3s;
+            background: #fff;
         }
-
         .cell:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            background: #f0f0f0;
         }
-
-        .cell.x {
-            color: #FF69B4;
+        .leaderboard {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
         }
-
-        .cell.o {
-            color: #4169E1;
+        #player-form {
+            margin: 20px;
         }
-
-        .button {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
+        .info {
             margin: 10px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        .winning-cell {
-            animation: winner 1s infinite;
-        }
-
-        @keyframes winner {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎮 Tic Tac Toe 🎮</h1>
-        
-        <div id="gameStatus" class="game-status">Spieler X ist am Zug</div>
-        
-        <div class="game-board" id="board">
-            <button class="cell" data-index="0"></button>
-            <button class="cell" data-index="1"></button>
-            <button class="cell" data-index="2"></button>
-            <button class="cell" data-index="3"></button>
-            <button class="cell" data-index="4"></button>
-            <button class="cell" data-index="5"></button>
-            <button class="cell" data-index="6"></button>
-            <button class="cell" data-index="7"></button>
-            <button class="cell" data-index="8"></button>
+    <h1>Tic Tac Toe vs Bot</h1>
+    
+    <div id="player-form">
+        <h2>Spielername eingeben</h2>
+        <input type="text" id="player-name" placeholder="Dein Name">
+        <button onclick="startGame()">Spiel starten</button>
+    </div>
+
+    <div id="game-container">
+        <div class="info">
+            <div>Spieler: <span id="current-player"></span></div>
+            <div>Level: <span id="level">1</span></div>
+            <div>Punkte: <span id="score">0</span></div>
         </div>
 
-        <button onclick="resetGame()" class="button">Neues Spiel</button>
+        <div class="board" id="board">
+            <div class="cell" onclick="makeMove(0)"></div>
+            <div class="cell" onclick="makeMove(1)"></div>
+            <div class="cell" onclick="makeMove(2)"></div>
+            <div class="cell" onclick="makeMove(3)"></div>
+            <div class="cell" onclick="makeMove(4)"></div>
+            <div class="cell" onclick="makeMove(5)"></div>
+            <div class="cell" onclick="makeMove(6)"></div>
+            <div class="cell" onclick="makeMove(7)"></div>
+            <div class="cell" onclick="makeMove(8)"></div>
+        </div>
+
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <div id="leaderboard-list"></div>
+        </div>
     </div>
 
     <script>
         let currentPlayer = 'X';
-        let gameBoard = ['', '', '', '', '', '', '', '', ''];
-        let gameActive = true;
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = false;
+        let playerName = '';
+        let currentLevel = 1;
+        let currentScore = 0;
+        let leaderboard = JSON.parse(localStorage.getItem('tictactoeLeaderboard')) || [];
 
-        const winningCombinations = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Reihen
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Spalten
-            [0, 4, 8], [2, 4, 6] // Diagonalen
-        ];
-
-        const cells = document.querySelectorAll('.cell');
-        const statusDisplay = document.getElementById('gameStatus');
-
-        cells.forEach(cell => {
-            cell.addEventListener('click', handleCellClick);
-        });
-
-        function handleCellClick(event) {
-            const cell = event.target;
-            const index = cell.getAttribute('data-index');
-
-            if (gameBoard[index] !== '' || !gameActive) {
+        function startGame() {
+            playerName = document.getElementById('player-name').value.trim();
+            if (playerName === '') {
+                alert('Bitte gib einen Namen ein!');
                 return;
             }
-
-            gameBoard[index] = currentPlayer;
-            cell.textContent = currentPlayer;
-            cell.classList.add(currentPlayer.toLowerCase());
-
-            if (checkWin()) {
-                gameActive = false;
-                statusDisplay.textContent = Spieler ${currentPlayer} gewinnt! 🎉;
-                highlightWinningCombination();
-                return;
-            }
-
-            if (checkDraw()) {
-                gameActive = false;
-                statusDisplay.textContent = 'Unentschieden! 🤝';
-                return;
-            }
-
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            statusDisplay.textContent = Spieler ${currentPlayer} ist am Zug;
-        }
-
-        function checkWin() {
-            return winningCombinations.some(combination => {
-                return combination.every(index => {
-                    return gameBoard[index] === currentPlayer;
-                });
-            });
-        }
-
-        function checkDraw() {
-            return gameBoard.every(cell => cell !== '');
-        }
-
-        function highlightWinningCombination() {
-            winningCombinations.forEach(combination => {
-                if (combination.every(index => gameBoard[index] === currentPlayer)) {
-                    combination.forEach(index => {
-                        cells[index].classList.add('winning-cell');
-                    });
-                }
-            });
+            document.getElementById('player-form').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            document.getElementById('current-player').textContent = playerName;
+            resetGame();
+            updateLeaderboard();
         }
 
         function resetGame() {
-            currentPlayer = 'X';
-            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            board = ['', '', '', '', '', '', '', '', ''];
             gameActive = true;
-            statusDisplay.textContent = Spieler ${currentPlayer} ist am Zug;
+            currentPlayer = 'X';
+            document.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
+            document.getElementById('level').textContent = currentLevel;
+        }
+
+        function makeMove(index) {
+            if (!gameActive || board[index] !== '' || currentPlayer === 'O') return;
+
+            board[index] = 'X';
+            document.querySelectorAll('.cell')[index].textContent = 'X';
             
-            cells.forEach(cell => {
-                cell.textContent = '';
-                cell.classList.remove('x', 'o', 'winning-cell');
+            if (checkWinner()) {
+                handleGameWon();
+                return;
+            }
+            
+            if (board.includes('')) {
+                currentPlayer = 'O';
+                setTimeout(() => botMove(), 500);
+            } else {
+                handleDraw();
+            }
+        }
+
+        function botMove() {
+            if (!gameActive) return;
+
+            let index;
+            switch(currentLevel) {
+                case 1:
+                    index = getRandomMove();
+                    break;
+                case 2:
+                    index = Math.random() < 0.5 ? getSmartMove() : getRandomMove();
+                    break;
+                default:
+                    index = getSmartMove();
+                    break;
+            }
+
+            board[index] = 'O';
+            document.querySelectorAll('.cell')[index].textContent = 'O';
+            
+            if (checkWinner()) {
+                handleGameLost();
+                return;
+            }
+            
+            if (board.includes('')) {
+                currentPlayer = 'X';
+            } else {
+                handleDraw();
+            }
+        }
+
+        function getRandomMove() {
+            let emptyCells = board.reduce((acc, cell, index) => {
+                if (cell === '') acc.push(index);
+                return acc;
+            }, []);
+            return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        }
+
+        function getSmartMove() {
+            // Versuche zu gewinnen
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = 'O';
+                    if (checkWinner()) {
+                        board[i] = '';
+                        return i;
+                    }
+                    board[i] = '';
+                }
+            }
+
+            // Blockiere Spieler-Gewinnzug
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = 'X';
+                    if (checkWinner()) {
+                        board[i] = '';
+                        return i;
+                    }
+                    board[i] = '';
+                }
+            }
+
+            // Nimm die Mitte, wenn frei
+            if (board[4] === '') return 4;
+
+            // Nimm eine zufällige freie Ecke
+            const corners = [0, 2, 6, 8].filter(i => board[i] === '');
+            if (corners.length > 0) {
+                return corners[Math.floor(Math.random() * corners.length)];
+            }
+
+            // Nimm ein zufälliges freies Feld
+            return getRandomMove();
+        }
+
+        function checkWinner() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertikal
+                [0, 4, 8], [2, 4, 6] // Diagonal
+            ];
+
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return board[a] !== '' && board[a] === board[b] && board[b] === board[c];
             });
+        }
+
+        function handleGameWon() {
+            gameActive = false;
+            currentScore++;
+            document.getElementById('score').textContent = currentScore;
+            setTimeout(() => {
+                alert('Gewonnen! Nächstes Level!');
+                currentLevel++;
+                resetGame();
+            }, 100);
+        }
+
+        function handleGameLost() {
+            gameActive = false;
+            updateLeaderboard();
+            setTimeout(() => {
+                alert(`Spiel vorbei! Deine Punkte: ${currentScore}`);
+                resetGame();
+                currentLevel = 1;
+                currentScore = 0;
+                document.getElementById('score').textContent = currentScore;
+            }, 100);
+        }
+
+        function handleDraw() {
+            gameActive = false;
+            setTimeout(() => {
+                alert('Unentschieden!');
+                resetGame();
+            }, 100);
+        }
+
+        function updateLeaderboard() {
+            if (currentScore > 0) {
+                leaderboard.push({
+                    name: playerName,
+                    score: currentScore
+                });
+                leaderboard.sort((a, b) => b.score - a.score);
+                leaderboard = leaderboard.slice(0, 10); // Top 10 behalten
+                localStorage.setItem('tictactoeLeaderboard', JSON.stringify(leaderboard));
+            }
+
+            const leaderboardHtml = leaderboard
+                .map((entry, index) => `<div>${index + 1}. ${entry.name}: ${entry.score} Punkte</div>`)
+                .join('');
+            document.getElementById('leaderboard-list').innerHTML = leaderboardHtml;
         }
     </script>
 </body>
