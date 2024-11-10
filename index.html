@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Online</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Tic Tac Toe Online 🎮</h1>
+        
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <input type="text" id="playerName" placeholder="Dein Name" required>
+            <button onclick="login()" class="button">Spielen</button>
+        </div>
+
+        <!-- Lobby Screen -->
+        <div id="lobbyScreen" class="screen" style="display: none;">
+            <h2>Lobby</h2>
+            <div class="lobby-options">
+                <div class="create-game">
+                    <button onclick="createGame()" class="button">Neues Spiel erstellen</button>
+                </div>
+                <div class="game-list">
+                    <h3>Offene Spiele</h3>
+                    <div id="gamesList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen" style="display: none;">
+            <div class="game-info">
+                <div id="gameId"></div>
+                <div id="playerInfo"></div>
+                <div id="gameStatus" class="game-status"></div>
+            </div>
+            
+            <div class="game-board" id="board">
+                <button class="cell" data-index="0"></button>
+                <button class="cell" data-index="1"></button>
+                <button class="cell" data-index="2"></button>
+                <button class="cell" data-index="3"></button>
+                <button class="cell" data-index="4"></button>
+                <button class="cell" data-index="5"></button>
+                <button class="cell" data-index="6"></button>
+                <button class="cell" data-index="7"></button>
+                <button class="cell" data-index="8"></button>
+            </div>
+
+            <div class="game-controls">
+                <button onclick="leaveGame()" class="button">Zurück zur Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database.js"></script>
+    <script src="config.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
