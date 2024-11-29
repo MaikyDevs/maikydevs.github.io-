@@ -1,273 +1,283 @@
 
-<html>
+<html lang="de">
 <head>
-    <title>Tic Tac Toe vs Bot</title>
+    <meta charset="UTF-8">
+    <title>Premium Casino Slot Machine</title>
     <style>
         body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a, #0a0a2e);
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            color: white;
+        }
+
+        .casino-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+
+        .slot-machine {
             text-align: center;
-        }
-        #game-container {
-            display: none;
-        }
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 5px;
+            padding: 30px;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
             margin: 20px auto;
-            width: 310px;
+            border: 3px solid gold;
         }
-        .cell {
-            width: 100px;
-            height: 100px;
-            border: 2px solid #333;
+
+        .money-display {
+            font-size: 24px;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+            margin: 20px 0;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,215,0,0.3);
+        }
+
+        .slots {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .slot {
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border: 5px solid gold;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 60px;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .slot.spinning {
+            animation: spin 0.2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            background: #fff;
+            transition: 0.3s;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .cell:hover {
-            background: #f0f0f0;
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        .leaderboard {
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #resetButton {
             margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
+            background: linear-gradient(45deg, #ff4444, #cc0000);
+            color: white;
         }
-        #player-form {
-            margin: 20px;
+
+        #resetButton:hover {
+            background: linear-gradient(45deg, #ff6666, #ff0000);
         }
-        .info {
-            margin: 10px;
-            font-size: 18px;
+
+        #result {
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .win {
+            background: rgba(0,255,0,0.2);
+            border: 2px solid #00ff00;
+        }
+
+        .lose {
+            background: rgba(255,0,0,0.2);
+            border: 2px solid #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .slots {
+                gap: 10px;
+            }
+            .slot {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slot {
+                width: 80px;
+                height: 80px;
+                font-size: 30px;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Tic Tac Toe vs Bot</h1>
-    
-    <div id="player-form">
-        <h2>Spielername eingeben</h2>
-        <input type="text" id="player-name" placeholder="Dein Name">
-        <button onclick="startGame()">Spiel starten</button>
-    </div>
-
-    <div id="game-container">
-        <div class="info">
-            <div>Spieler: <span id="current-player"></span></div>
-            <div>Level: <span id="level">1</span></div>
-            <div>Punkte: <span id="score">0</span></div>
-        </div>
-
-        <div class="board" id="board">
-            <div class="cell" onclick="makeMove(0)"></div>
-            <div class="cell" onclick="makeMove(1)"></div>
-            <div class="cell" onclick="makeMove(2)"></div>
-            <div class="cell" onclick="makeMove(3)"></div>
-            <div class="cell" onclick="makeMove(4)"></div>
-            <div class="cell" onclick="makeMove(5)"></div>
-            <div class="cell" onclick="makeMove(6)"></div>
-            <div class="cell" onclick="makeMove(7)"></div>
-            <div class="cell" onclick="makeMove(8)"></div>
-        </div>
-
-        <div class="leaderboard">
-            <h2>Leaderboard</h2>
-            <div id="leaderboard-list"></div>
+    <div class="casino-container">
+        <div class="slot-machine">
+            <h1>🎰 Premium Casino 🎰</h1>
+            <div class="money-display">
+                Guthaben: <span id="balance">1000</span> €
+            </div>
+            <div class="slots">
+                <div class="slot" id="slot1">🎰</div>
+                <div class="slot" id="slot2">🎰</div>
+                <div class="slot" id="slot3">🎰</div>
+            </div>
+            <div class="controls">
+                <button onclick="setBet(10)">10€ Setzen</button>
+                <button onclick="setBet(50)">50€ Setzen</button>
+                <button onclick="setBet(100)">100€ Setzen</button>
+            </div>
+            <button id="spinButton" onclick="spin()">Drehen</button>
+            <button id="resetButton" onclick="resetBalance()">Neues Spiel</button>
+            <p id="result"></p>
         </div>
     </div>
 
     <script>
-        let currentPlayer = 'X';
-        let board = ['', '', '', '', '', '', '', '', ''];
-        let gameActive = false;
-        let playerName = '';
-        let currentLevel = 1;
-        let currentScore = 0;
-        let leaderboard = JSON.parse(localStorage.getItem('tictactoeLeaderboard')) || [];
+        const symbols = ['💎', '7️⃣', '🎰', '🍒', '🍊', '🍋'];
+        let balance = parseInt(localStorage.getItem('casinoBalance')) || 1000;
+        let currentBet = 10;
+        let isSpinning = false;
 
-        function startGame() {
-            playerName = document.getElementById('player-name').value.trim();
-            if (playerName === '') {
-                alert('Bitte gib einen Namen ein!');
-                return;
-            }
-            document.getElementById('player-form').style.display = 'none';
-            document.getElementById('game-container').style.display = 'block';
-            document.getElementById('current-player').textContent = playerName;
-            resetGame();
-            updateLeaderboard();
-        }
-
-        function resetGame() {
-            board = ['', '', '', '', '', '', '', '', ''];
-            gameActive = true;
-            currentPlayer = 'X';
-            document.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
-            document.getElementById('level').textContent = currentLevel;
-        }
-
-        function makeMove(index) {
-            if (!gameActive || board[index] !== '' || currentPlayer === 'O') return;
-
-            board[index] = 'X';
-            document.querySelectorAll('.cell')[index].textContent = 'X';
+        function updateBalance() {
+            document.getElementById('balance').textContent = balance;
+            localStorage.setItem('casinoBalance', balance);
             
-            if (checkWinner()) {
-                handleGameWon();
-                return;
-            }
-            
-            if (board.includes('')) {
-                currentPlayer = 'O';
-                setTimeout(() => botMove(), 500);
+            if (balance < 10) {
+                document.getElementById('spinButton').disabled = true;
+                document.getElementById('result').textContent = '😢 Du hast leider kein Geld mehr! Starte ein neues Spiel! 😢';
+                document.getElementById('result').className = 'lose';
             } else {
-                handleDraw();
+                document.getElementById('spinButton').disabled = false;
             }
         }
 
-        function botMove() {
-            if (!gameActive) return;
-
-            let index;
-            switch(currentLevel) {
-                case 1:
-                    index = getRandomMove();
-                    break;
-                case 2:
-                    index = Math.random() < 0.5 ? getSmartMove() : getRandomMove();
-                    break;
-                default:
-                    index = getSmartMove();
-                    break;
+        function resetBalance() {
+            if(confirm('Möchtest du wirklich ein neues Spiel starten?')) {
+                balance = 1000;
+                updateBalance();
+                document.getElementById('result').textContent = '🎮 Neues Spiel gestartet! Viel Glück! 🎮';
+                document.getElementById('result').className = '';
             }
+        }
 
-            board[index] = 'O';
-            document.querySelectorAll('.cell')[index].textContent = 'O';
+        function setBet(amount) {
+            if (!isSpinning && balance >= amount) {
+                currentBet = amount;
+                alert(`Einsatz auf ${amount}€ gesetzt!`);
+            } else if (balance < amount) {
+                alert('Nicht genügend Guthaben für diesen Einsatz!');
+            }
+        }
+
+        function calculateWin(results) {
+            if (results[0] === results[1] && results[1] === results[2]) {
+                if (results[0] === '💎') return currentBet * 10;
+                if (results[0] === '7️⃣') return currentBet * 7;
+                return currentBet * 5;
+            }
+            if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                return currentBet * 2;
+            }
+            return 0;
+        }
+
+        function spin() {
+            if (isSpinning || balance < currentBet) return;
             
-            if (checkWinner()) {
-                handleGameLost();
-                return;
-            }
+            isSpinning = true;
+            balance -= currentBet;
+            updateBalance();
             
-            if (board.includes('')) {
-                currentPlayer = 'X';
-            } else {
-                handleDraw();
-            }
-        }
-
-        function getRandomMove() {
-            let emptyCells = board.reduce((acc, cell, index) => {
-                if (cell === '') acc.push(index);
-                return acc;
-            }, []);
-            return emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        }
-
-        function getSmartMove() {
-            // Versuche zu gewinnen
-            for (let i = 0; i < 9; i++) {
-                if (board[i] === '') {
-                    board[i] = 'O';
-                    if (checkWinner()) {
-                        board[i] = '';
-                        return i;
-                    }
-                    board[i] = '';
-                }
-            }
-
-            // Blockiere Spieler-Gewinnzug
-            for (let i = 0; i < 9; i++) {
-                if (board[i] === '') {
-                    board[i] = 'X';
-                    if (checkWinner()) {
-                        board[i] = '';
-                        return i;
-                    }
-                    board[i] = '';
-                }
-            }
-
-            // Nimm die Mitte, wenn frei
-            if (board[4] === '') return 4;
-
-            // Nimm eine zufällige freie Ecke
-            const corners = [0, 2, 6, 8].filter(i => board[i] === '');
-            if (corners.length > 0) {
-                return corners[Math.floor(Math.random() * corners.length)];
-            }
-
-            // Nimm ein zufälliges freies Feld
-            return getRandomMove();
-        }
-
-        function checkWinner() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertikal
-                [0, 4, 8], [2, 4, 6] // Diagonal
-            ];
-
-            return winPatterns.some(pattern => {
-                const [a, b, c] = pattern;
-                return board[a] !== '' && board[a] === board[b] && board[b] === board[c];
+            const slots = document.querySelectorAll('.slot');
+            const results = [];
+            let completedSlots = 0;
+            
+            slots.forEach((slot, index) => {
+                slot.classList.add('spinning');
+                
+                setTimeout(() => {
+                    const randomIndex = Math.floor(Math.random() * symbols.length);
+                    const symbol = symbols[randomIndex];
+                    results[index] = symbol;
+                    
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        slot.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                        count++;
+                        if (count > 20) {
+                            clearInterval(interval);
+                            slot.textContent = symbol;
+                            slot.classList.remove('spinning');
+                            completedSlots++;
+                            
+                            if (completedSlots === 3) {
+                                const winAmount = calculateWin(results);
+                                const resultElement = document.getElementById('result');
+                                
+                                if (winAmount > 0) {
+                                    balance += winAmount;
+                                    resultElement.textContent = `🎉 Gewonnen! +${winAmount}€ 🎉`;
+                                    resultElement.className = 'win';
+                                } else {
+                                    resultElement.textContent = '😢 Verloren! Versuchen Sie es noch einmal! 😢';
+                                    resultElement.className = 'lose';
+                                }
+                                
+                                updateBalance();
+                                isSpinning = false;
+                            }
+                        }
+                    }, 50);
+                }, index * 500);
             });
         }
 
-        function handleGameWon() {
-            gameActive = false;
-            currentScore++;
-            document.getElementById('score').textContent = currentScore;
-            setTimeout(() => {
-                alert('Gewonnen! Nächstes Level!');
-                currentLevel++;
-                resetGame();
-            }, 100);
-        }
-
-        function handleGameLost() {
-            gameActive = false;
-            updateLeaderboard();
-            setTimeout(() => {
-                alert(`Spiel vorbei! Deine Punkte: ${currentScore}`);
-                resetGame();
-                currentLevel = 1;
-                currentScore = 0;
-                document.getElementById('score').textContent = currentScore;
-            }, 100);
-        }
-
-        function handleDraw() {
-            gameActive = false;
-            setTimeout(() => {
-                alert('Unentschieden!');
-                resetGame();
-            }, 100);
-        }
-
-        function updateLeaderboard() {
-            if (currentScore > 0) {
-                leaderboard.push({
-                    name: playerName,
-                    score: currentScore
-                });
-                leaderboard.sort((a, b) => b.score - a.score);
-                leaderboard = leaderboard.slice(0, 10); // Top 10 behalten
-                localStorage.setItem('tictactoeLeaderboard', JSON.stringify(leaderboard));
-            }
-
-            const leaderboardHtml = leaderboard
-                .map((entry, index) => `<div>${index + 1}. ${entry.name}: ${entry.score} Punkte</div>`)
-                .join('');
-            document.getElementById('leaderboard-list').innerHTML = leaderboardHtml;
-        }
+        // Initialisiere Balance beim Laden
+        updateBalance();
     </script>
 </body>
 </html>
