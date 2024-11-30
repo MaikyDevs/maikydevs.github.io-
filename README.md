@@ -2,282 +2,193 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Premium Casino Slot Machine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Upload Platform</title>
+    <!-- Supabase CDN -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         body {
-            margin: 0;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a1a, #0a0a2e);
             font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        .casino-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f5f5f5;
         }
-
-        .slot-machine {
+        .upload-container {
             text-align: center;
-            padding: 30px;
-            background: linear-gradient(45deg, #2c3e50, #3498db);
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            margin: 20px auto;
-            border: 3px solid gold;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
-
-        .money-display {
-            font-size: 24px;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.5);
-            margin: 20px 0;
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid rgba(255,215,0,0.3);
-        }
-
-        .slots {
-            display: flex;
-            justify-content: center;
+        .video-container {
+            display: grid;
             gap: 20px;
-            margin: 30px 0;
         }
-
-        .slot {
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.1);
-            border: 5px solid gold;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
-            transition: transform 0.3s;
-        }
-
-        .slot.spinning {
-            animation: spin 0.2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .controls {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        button {
-            padding: 15px 30px;
-            font-size: 20px;
-            background: linear-gradient(45deg, #ffd700, #ffa500);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            color: #000;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #resetButton {
-            margin-top: 20px;
-            background: linear-gradient(45deg, #ff4444, #cc0000);
+        .upload-btn {
+            padding: 12px 24px;
+            background-color: #4CAF50;
             color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
-
-        #resetButton:hover {
-            background: linear-gradient(45deg, #ff6666, #ff0000);
+        .upload-btn:hover {
+            background-color: #45a049;
         }
-
-        #result {
-            font-size: 24px;
-            margin: 20px 0;
-            padding: 15px;
+        .progress-container {
+            margin-top: 15px;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
             border-radius: 10px;
-            transition: 0.3s;
+            overflow: hidden;
         }
-
-        .win {
-            background: rgba(0,255,0,0.2);
-            border: 2px solid #00ff00;
+        .progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease;
         }
-
-        .lose {
-            background: rgba(255,0,0,0.2);
-            border: 2px solid #ff0000;
+        .video-wrapper {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        @media (max-width: 768px) {
-            .slots {
-                gap: 10px;
-            }
-            .slot {
-                width: 100px;
-                height: 100px;
-                font-size: 40px;
-            }
+        video {
+            width: 100%;
+            border-radius: 4px;
         }
-
-        @media (max-width: 480px) {
-            .slot {
-                width: 80px;
-                height: 80px;
-                font-size: 30px;
-            }
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
+        .error-message {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="casino-container">
-        <div class="slot-machine">
-            <h1>🎰 Premium Casino 🎰</h1>
-            <div class="money-display">
-                Guthaben: <span id="balance">1000</span> €
+    <div class="upload-container">
+        <h1>Meine Video Platform</h1>
+        <input type="file" id="fileInput" accept="video/*" style="display: none">
+        <button id="uploadBtn" class="upload-btn">Video hochladen</button>
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-bar">
+                <div id="progress" class="progress"></div>
             </div>
-            <div class="slots">
-                <div class="slot" id="slot1">🎰</div>
-                <div class="slot" id="slot2">🎰</div>
-                <div class="slot" id="slot3">🎰</div>
-            </div>
-            <div class="controls">
-                <button onclick="setBet(10)">10€ Setzen</button>
-                <button onclick="setBet(50)">50€ Setzen</button>
-                <button onclick="setBet(100)">100€ Setzen</button>
-            </div>
-            <button id="spinButton" onclick="spin()">Drehen</button>
-            <button id="resetButton" onclick="resetBalance()">Neues Spiel</button>
-            <p id="result"></p>
         </div>
+        <div id="errorMessage" class="error-message"></div>
     </div>
 
+    <div id="videoContainer" class="video-container"></div>
+
     <script>
-        const symbols = ['💎', '7️⃣', '🎰', '🍒', '🍊', '🍋'];
-        let balance = parseInt(localStorage.getItem('casinoBalance')) || 1000;
-        let currentBet = 10;
-        let isSpinning = false;
+        // Supabase Konfiguration - beachte das "createClient" muss vom Supabase-Objekt aufgerufen werden
+        const supabaseUrl = 'https://zchzwflaibfmlpxsuxas.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjaHp3ZmxhaWJmbWxweHN1eGFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMwMDQyNTksImV4cCI6MjA0ODU4MDI1OX0.D7W6N44mpRuWv8gpZTnydLEc34C2he6Eid-NvzKqR4w';
+        
+        // Hier war der Fehler - korrigierte Initialisierung
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        function updateBalance() {
-            document.getElementById('balance').textContent = balance;
-            localStorage.setItem('casinoBalance', balance);
-            
-            if (balance < 10) {
-                document.getElementById('spinButton').disabled = true;
-                document.getElementById('result').textContent = '😢 Du hast leider kein Geld mehr! Starte ein neues Spiel! 😢';
-                document.getElementById('result').className = 'lose';
-            } else {
-                document.getElementById('spinButton').disabled = false;
-            }
-        }
+        // DOM Elemente
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const progressContainer = document.getElementById('progressContainer');
+        const progress = document.getElementById('progress');
+        const errorMessage = document.getElementById('errorMessage');
+        const videoContainer = document.getElementById('videoContainer');
 
-        function resetBalance() {
-            if(confirm('Möchtest du wirklich ein neues Spiel starten?')) {
-                balance = 1000;
-                updateBalance();
-                document.getElementById('result').textContent = '🎮 Neues Spiel gestartet! Viel Glück! 🎮';
-                document.getElementById('result').className = '';
-            }
-        }
+        // Event Listener
+        uploadBtn.addEventListener('click', () => {
+            console.log('Button geklickt'); // Debug-Ausgabe
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', async (event) => {
+            console.log('Datei ausgewählt');
+            const file = event.target.files[0];
+            if (!file) return;
 
-        function setBet(amount) {
-            if (!isSpinning && balance >= amount) {
-                currentBet = amount;
-                alert(`Einsatz auf ${amount}€ gesetzt!`);
-            } else if (balance < amount) {
-                alert('Nicht genügend Guthaben für diesen Einsatz!');
-            }
-        }
-
-        function calculateWin(results) {
-            if (results[0] === results[1] && results[1] === results[2]) {
-                if (results[0] === '💎') return currentBet * 10;
-                if (results[0] === '7️⃣') return currentBet * 7;
-                return currentBet * 5;
-            }
-            if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
-                return currentBet * 2;
-            }
-            return 0;
-        }
-
-        function spin() {
-            if (isSpinning || balance < currentBet) return;
-            
-            isSpinning = true;
-            balance -= currentBet;
-            updateBalance();
-            
-            const slots = document.querySelectorAll('.slot');
-            const results = [];
-            let completedSlots = 0;
-            
-            slots.forEach((slot, index) => {
-                slot.classList.add('spinning');
+            try {
+                progressContainer.style.display = 'block';
+                errorMessage.style.display = 'none';
                 
-                setTimeout(() => {
-                    const randomIndex = Math.floor(Math.random() * symbols.length);
-                    const symbol = symbols[randomIndex];
-                    results[index] = symbol;
-                    
-                    let count = 0;
-                    const interval = setInterval(() => {
-                        slot.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                        count++;
-                        if (count > 20) {
-                            clearInterval(interval);
-                            slot.textContent = symbol;
-                            slot.classList.remove('spinning');
-                            completedSlots++;
-                            
-                            if (completedSlots === 3) {
-                                const winAmount = calculateWin(results);
-                                const resultElement = document.getElementById('result');
-                                
-                                if (winAmount > 0) {
-                                    balance += winAmount;
-                                    resultElement.textContent = `🎉 Gewonnen! +${winAmount}€ 🎉`;
-                                    resultElement.className = 'win';
-                                } else {
-                                    resultElement.textContent = '😢 Verloren! Versuchen Sie es noch einmal! 😢';
-                                    resultElement.className = 'lose';
-                                }
-                                
-                                updateBalance();
-                                isSpinning = false;
-                            }
-                        }
-                    }, 50);
-                }, index * 500);
-            });
+                const cleanFileName = `${Date.now()}-${file.name
+                    .replace(/[^a-zA-Z0-9.]/g, '_')
+                    .replace(/\s+/g, '_')
+                    .toLowerCase()}`;
+                
+                console.log('Starte Upload...', cleanFileName);
+                
+                const { data, error } = await supabaseClient.storage
+                    .from('videos')
+                    .upload(cleanFileName, file);
+
+                if (error) throw error;
+
+                console.log('Upload erfolgreich');
+
+                const { data: { publicUrl } } = supabaseClient.storage
+                    .from('videos')
+                    .getPublicUrl(cleanFileName);
+
+                addVideoToPage(publicUrl);
+                
+                // Reset UI
+                progressContainer.style.display = 'none';
+                progress.style.width = '0%';
+                fileInput.value = '';
+            } catch (error) {
+                console.error('Upload error:', error);
+                errorMessage.textContent = 'Fehler beim Upload: ' + error.message;
+                errorMessage.style.display = 'block';
+                progressContainer.style.display = 'none';
+            }
+        });
+
+        function addVideoToPage(url) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'video-wrapper';
+
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.preload = 'metadata';
+
+            wrapper.appendChild(video);
+            videoContainer.insertBefore(wrapper, videoContainer.firstChild);
         }
 
-        // Initialisiere Balance beim Laden
-        updateBalance();
+        // Bestehende Videos laden
+        async function loadExistingVideos() {
+            try {
+                const { data, error } = await supabaseClient.storage
+                    .from('videos')
+                    .list();
+
+                if (error) throw error;
+
+                for (const file of data) {
+                    const { data: { publicUrl } } = supabaseClient.storage
+                        .from('videos')
+                        .getPublicUrl(file.name);
+                    addVideoToPage(publicUrl);
+                }
+            } catch (error) {
+                console.error('Error loading videos:', error);
+                errorMessage.textContent = 'Fehler beim Laden der Videos: ' + error.message;
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Lade existierende Videos beim Start
+        loadExistingVideos();
     </script>
 </body>
 </html>
