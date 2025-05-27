@@ -1,40 +1,55 @@
 
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaikyDevs Games</title>
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">MaikyDevs Games</div>
-            <ul>
-                <li><a href="index.html">Startseite</a></li>
-                <li><a href="games.html">Spiele</a></li>
-                <li><a href="voting.html">Voting</a></li>
-                <li><a href="https://maikydevs.itch.io/">itch.io</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>MaikyDevs Universe</h1>
-                <p class="hero-subtitle">Tauche ein in eine Welt voller Action und Abenteuer</p>
-                <div class="hero-buttons">
-                    <a href="games.html" class="primary-btn">Spiele entdecken</a>
-                    <a href="voting.html" class="secondary-btn">Jetzt abstimmen</a>
-                </div>
+<body>   
+    <div class="flex-container">
+        <div class="game-board">
+            <br>
+                <table id="board"></table>
+        </div>
+        <div id="leaderboard" class="leaderboard">
+            <h2>Top 10 Times</h2>
+            <ul></ul>
+        </div>
+    </div>
+        <section id="footer">
+            <div id="start"><img src="images/start.png"></div>
+            <div id="size-btns">
+                <div id="size-btns"><button id="size-9"><img src="images/easy.png"> Easy</button></div> 
+                <div id="size-btns"><button id="size-16"><img src="images/medium.png"> Medium</button></div> 
+                <div id="size-btns"><button id="size-30"><img src="images/hard.png"> Hard</button></div>
             </div>
-            <div class="hero-overlay"></div>
+            <div id="clock"><em>"Shift + Click"</em></strong> to toggle <img src="images/flag.png"></div>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 MaikyDevs Games. Alle Rechte vorbehalten.</p>
-    </footer>
+    <!-- Lade die neueste Version von Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        // Warte bis das Dokument geladen ist
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                console.log('Initialisiere Supabase...');
+                // Initialisiere Supabase global
+                window.supabase = supabase.createClient(
+                    'https://pfehfciysulijpkbhuhf.supabase.co',
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZWhmY2l5c3VsaWpwa2JodWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDY5MzMsImV4cCI6MjA2MzkyMjkzM30.P8zgFcu17OxHwgb-b6D-qaWHTxhVtZwqvS3U8qS03f8'
+                );
+                console.log('Supabase erfolgreich initialisiert:', window.supabase);
+            } catch (err) {
+                console.error('Fehler bei der Supabase-Initialisierung:', err);
+            }
+        });
+    </script>
+    <script src="js/cell.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
