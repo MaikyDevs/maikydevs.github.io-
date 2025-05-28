@@ -16,10 +16,14 @@
 * {
     -o-user-select: none;
     user-select: none;
+    box-sizing: border-box;
 }
 
 body {
     background-color: #0D8584;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
 
 #board {
@@ -55,7 +59,6 @@ button:hover {
     border-left: 1.5px solid #808080;
     border-right: 1.5px solid #FAFAFA;
     border-bottom: 1.5px solid #FAFAFA;
-    /* height: 28px; */
     width: 200px;
     height: 22px;
     margin: 2px;
@@ -180,7 +183,7 @@ button:hover {
     float: left;
 }
 
-#status-bar  {
+#status-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -230,12 +233,8 @@ td {
 }
 
 #window-title-bar {
-    background: -moz-linear-gradient(left, rgba(33,41,89,1) 0%, rgba(33,41,89,1) 11%, rgba(80,114,161,1) 56%, rgba(117,172,219,0.7) 92%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
+    background: linear-gradient(to right, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
 }
-
 
 body::after {
     content: "by maiky";
@@ -248,44 +247,87 @@ body::after {
     pointer-events: none;
 }
 
-.leaderboard {
-    font-family: 'MS Sans Serif';
-    background-color: #C0C0C0;
-    border-top: 2px solid #ffffff;
-    border-right: 2px solid #7B7B7B;
-    border-bottom: 2px solid #7B7B7B;
-    border-left: 2px solid #ffffff;
-    padding: 10px;
-    margin-left: 20px;
-    min-width: 200px;
+/* Mobile Anpassungen - nur für Bildschirme unter 768px */
+@media screen and (max-width: 768px) {
+    .flex-container {
+        margin: 20px 5px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #board {
+        transform: scale(0.9);
+        transform-origin: top center;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .leaderboard {
+        width: 95%;
+        margin: 10px auto;
+        min-width: unset;
+    }
+
+    #footer {
+        height: auto;
+        padding: 10px 5px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    #size-btns {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        float: none;
+    }
+
+    #size-btns button {
+        width: auto;
+        padding: 0 10px;
+    }
+
+    #clock {
+        width: 100%;
+        text-align: center;
+        float: none;
+        margin: 5px 0;
+    }
+
+    td {
+        height: 30px;
+        width: 30px;
+    }
 }
 
-.leaderboard h2 {
-    font-size: 16px;
-    text-align: center;
-    margin-bottom: 10px;
-    color: #212959;
-}
+/* Kleine Mobilgeräte - nur für Bildschirme unter 480px */
+@media screen and (max-width: 480px) {
+    #board {
+        transform: scale(0.8);
+    }
 
-.leaderboard ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+    button {
+        font-size: 12px;
+        height: 25px;
+        width: auto;
+        padding: 0 8px;
+    }
 
-.leaderboard li {
-    padding: 5px 10px;
-    margin: 2px 0;
-    font-size: 14px;
-    border-top: 1px solid #ffffff;
-    border-right: 1px solid #7B7B7B;
-    border-bottom: 1px solid #7B7B7B;
-    border-left: 1px solid #ffffff;
-}
+    #window-title {
+        font-size: 14px;
+    }
 
-.game-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 80px 10px;
+    .leaderboard {
+        font-size: 12px;
+    }
+
+    #timer, #bomb-counter {
+        font-size: 28px;
+    }
 }
