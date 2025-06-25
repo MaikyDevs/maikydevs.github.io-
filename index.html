@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maiky's Chillout – Dein ultimativer Discord Server für Gaming & Community</title>
-    <meta name="description" content="Tritt Maiky's Chillout Discord bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie. Optimiert für alle Geräte.">
-    <meta name="keywords" content="Maiky's Chillout, Discord Server, Gaming Community, Minecraft, Hogwarts Legacy, Resident Evil, Umfragen, Gewinnspiele, entspannen, zocken, Freunde finden, deutsch, Community, Discord Gaming, Discord Deutschland">
+    <title>Maiky's Chillout – Dein ultimativer Discord & Minecraft Server</title>
+    <meta name="description" content="Tritt Maiky's Chillout Discord & Minecraft Server bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie. Optimiert für alle Geräte. Jetzt Vanilla, bald mit /home und mehr!">
+    <meta name="keywords" content="Maiky's Chillout, Discord Server, Minecraft Server, Gaming Community, Vanilla Minecraft, Minecraft Home, Umfragen, Gewinnspiele, entspannen, zocken, Freunde finden, deutsch, Community, Discord Gaming, Discord Deutschland, play.VibeCraftMc.de">
     <meta name="author" content="Maiky">
 
     <!-- Open Graph / Social Media Meta Tags für bessere Teilbarkeit -->
-    <meta property="og:title" content="Maiky's Chillout – Dein ultimativer Discord Server">
-    <meta property="og:description" content="Tritt Maiky's Chillout Discord bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie.">
+    <meta property="og:title" content="Maiky's Chillout – Dein ultimativer Discord & Minecraft Server">
+    <meta property="og:description" content="Tritt Maiky's Chillout Discord & Minecraft Server bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.vibecraftmc.de"> <!-- HIER DEINE TATSÄCHLICHE DOMAIN EINFÜGEN -->
-    <meta property="og:image" content="https://placehold.co/1200x630/2F3136/E0E0E0?text=Maikys%20Chillout%20Discord"> <!-- Platzhalterbild, später durch ein echtes Discord-Banner ersetzen -->
+    <meta property="og:image" content="https://placehold.co/1200x630/1A1A1D/6a1a72?text=Maikys%20Chillout%20Discord%20%26%20Minecraft"> <!-- Platzhalterbild, später durch ein echtes Discord/Minecraft-Banner ersetzen -->
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         /* Grundstile für Body und Container */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #121212; /* Sehr dunkler, fast schwarzer Hintergrund für Kontrast */
+            background-color: #0d0d0d; /* Sehr dunkler, fast schwarzer Hintergrund für extremen Kontrast */
             color: #E0E0E0; /* Helle Textfarbe */
             scroll-behavior: smooth;
             overflow-x: hidden; /* Verhindert horizontales Scrollen */
@@ -37,9 +37,9 @@
             100% { background-position: 0% 50%; }
         }
         .hero-background-animated {
-            background: linear-gradient(270deg, #6a1a72, #7289DA, #36C3D8, #6a1a72);
+            background: linear-gradient(270deg, #8A2BE2, #FF1493, #00BFFF, #8A2BE2); /* Lebhafterer, breiterer Farbverlauf */
             background-size: 400% 400%;
-            animation: glowing-gradient 15s ease infinite;
+            animation: glowing-gradient 20s ease infinite; /* Sanftere, längere Animation */
             position: relative;
             overflow: hidden;
         }
@@ -47,7 +47,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%); /* Stärkerer Leuchteffekt */
             opacity: 0.8;
             pointer-events: none;
         }
@@ -63,13 +63,12 @@
             letter-spacing: 1.5px;
             font-size: 1.25rem; /* Größerer Text */
             z-index: 1;
-            /* Leuchtender Rand */
-            box-shadow: 0 0 15px rgba(114, 137, 218, 0.6), 0 0 30px rgba(168, 129, 255, 0.4);
+            box-shadow: 0 0 20px rgba(114, 137, 218, 0.7), 0 0 40px rgba(168, 129, 255, 0.5); /* Stärkere Leuchtwirkung */
         }
         .btn-primary:hover {
             @apply scale-105;
             background: linear-gradient(45deg, #A881FF, #7289DA); /* Farbwechsel beim Hover */
-            box-shadow: 0 0 25px rgba(114, 137, 218, 0.8), 0 0 50px rgba(168, 129, 255, 0.6);
+            box-shadow: 0 0 30px rgba(114, 137, 218, 1), 0 0 60px rgba(168, 129, 255, 0.8);
         }
         .btn-primary::before {
             content: '';
@@ -78,7 +77,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%); /* Stärkerer Glanz */
             transform: rotate(45deg);
             transition: all 0.7s ease-in-out;
             opacity: 0;
@@ -90,19 +89,19 @@
         }
         /* Pulsierender Effekt für den Hauptbutton */
         @keyframes pulse-effect {
-            0% { transform: scale(1); box-shadow: 0 0 15px rgba(114, 137, 218, 0.6); }
-            50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(114, 137, 218, 0.8), 0 0 40px rgba(168, 129, 255, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 0 15px rgba(114, 137, 218, 0.6); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(114, 137, 218, 0.7); }
+            50% { transform: scale(1.02); box-shadow: 0 0 35px rgba(114, 137, 218, 0.9), 0 0 60px rgba(168, 129, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(114, 137, 218, 0.7); }
         }
         .animate-pulse-btn {
-            animation: pulse-effect 2.5s infinite ease-in-out;
+            animation: pulse-effect 2.8s infinite ease-in-out; /* Etwas langsamer, subtiler */
         }
 
         /* Abschnittsüberschriften */
         .section-heading {
             font-family: 'Orbitron', sans-serif; /* Futuristischere Schrift */
             @apply text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-16 text-center drop-shadow-lg;
-            text-shadow: 0 0 15px rgba(114, 137, 218, 0.7); /* Leuchtender Schatten */
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8); /* Leuchtender Schatten in Lila */
             line-height: 1.2;
         }
 
@@ -115,20 +114,20 @@
             overflow: hidden;
             opacity: 0; /* Für Eintritts-Animation */
             transform: translateY(40px); /* Für Eintritts-Animation */
-            animation: fadeInUp 0.9s ease-out forwards;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            animation: fadeInUp 1s ease-out forwards; /* Längere Eintritts-Animation */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Stärkerer Schatten */
         }
         .card:hover {
             @apply scale-102;
-            border-image: linear-gradient(45deg, #7289DA, #FF00FF, #00FFFF) 1; /* Neon-Verlauf Rahmen */
-            transform: translateY(-10px); /* Stärkerer Hoch-Effekt */
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(114, 137, 218, 0.5); /* Verbesserter Schatten mit Leuchten */
+            border-image: linear-gradient(45deg, #FF00FF, #00FFFF, #FFFF00) 1; /* Farbenfroher Neon-Verlauf Rahmen */
+            transform: translateY(-12px); /* Stärkerer Hoch-Effekt */
+            box-shadow: 0 18px 36px rgba(0,0,0,0.7), 0 0 25px rgba(255, 0, 255, 0.6); /* Verbesserter Schatten mit Leuchten */
         }
         .card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top left, rgba(114, 137, 218, 0.2), transparent 70%);
+            background: radial-gradient(circle at top left, rgba(138, 43, 226, 0.25), transparent 70%); /* Stärkerer Glanz */
             opacity: 0;
             transition: opacity 0.4s ease-in-out;
         }
@@ -140,7 +139,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(60px);
             }
             to {
                 opacity: 1;
@@ -154,6 +153,30 @@
         .card:nth-child(4) { animation-delay: 0.4s; }
         .card:nth-child(5) { animation-delay: 0.5s; }
         .card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Minecraft Server Sektion spezifische Stile */
+        .minecraft-section {
+            background-color: #121212;
+            border-top: 2px solid #333;
+            border-bottom: 2px solid #333;
+        }
+        .server-ip-box {
+            background-color: #282B30;
+            border: 2px solid #4CAF50; /* Minecraft-Grün als Akzent */
+            @apply p-6 rounded-xl flex flex-col md:flex-row items-center justify-center gap-4 shadow-lg;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5); /* Grüner Leuchteffekt */
+        }
+        .server-ip-text {
+            font-family: 'Orbitron', sans-serif;
+            @apply text-3xl md:text-4xl font-bold text-green-400;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+        }
+        .copy-button {
+            @apply px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold transition-colors duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75;
+        }
+        .copy-message {
+            @apply text-sm text-green-400 mt-2;
+        }
 
         /* Responsives Padding für Sektionen */
         .section-padding {
@@ -162,24 +185,24 @@
 
         /* Subtiles Hintergrundmuster */
         .pattern-bg {
-            background-image: radial-gradient(#2a2a2a 1px, transparent 1px), radial-gradient(#2a2a2a 1px, transparent 1px);
-            background-size: 30px 30px; /* Größer für mehr Präsenz */
-            background-position: 0 0, 15px 15px;
+            background-image: radial-gradient(rgba(42, 42, 42, 0.8) 1px, transparent 1px), radial-gradient(rgba(42, 42, 42, 0.8) 1px, transparent 1px);
+            background-size: 35px 35px; /* Größer für mehr Präsenz */
+            background-position: 0 0, 17.5px 17.5px;
             background-blend-mode: overlay; /* Für subtileren Effekt */
         }
 
         /* Animation für Überschrift in Hero Section */
         @keyframes text-pop-in {
-            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(5px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
         .animate-text-pop {
-            animation: text-pop-in 1s ease-out forwards;
+            animation: text-pop-in 1.2s ease-out forwards;
             animation-delay: 0.5s;
             opacity: 0; /* Versteckt am Anfang */
         }
         .animate-text-pop-delay {
-            animation: text-pop-in 1s ease-out forwards;
+            animation: text-pop-in 1.2s ease-out forwards;
             animation-delay: 0.8s;
             opacity: 0; /* Versteckt am Anfang */
         }
@@ -187,12 +210,13 @@
 </head>
 <body class="flex flex-col min-h-screen">
     <!-- Header/Navigation -->
-    <header class="py-6 shadow-2xl bg-[#121212] sticky top-0 z-50 border-b border-gray-700">
+    <header class="py-6 shadow-2xl bg-[#0d0d0d] sticky top-0 z-50 border-b-2 border-purple-800">
         <nav class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-4xl lg:text-5xl font-black text-white tracking-wider font-orbitron">Maiky's Chillout</h1>
-            <div class="flex space-x-8 md:space-x-12">
+            <div class="flex space-x-6 md:space-x-12">
+                <a href="#minecraft" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Minecraft</a>
                 <a href="#features" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Features</a>
-                <a href="#join" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
+                <a href="#join" class="text-white hover:text-blue-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
             </div>
         </nav>
     </header>
@@ -201,14 +225,32 @@
     <section class="hero-background-animated text-white section-padding flex-grow flex items-center justify-center text-center relative">
         <div class="container mx-auto px-4 relative z-10">
             <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 tracking-wide drop-shadow-xl animate-text-pop">
-                Dein Portal zu<br><span class="text-purple-400 font-orbitron">Gaming & Community</span>
+                Dein Portal zu<br><span class="text-green-400 font-orbitron">Gaming & Community</span>
             </h2>
             <p class="text-xl md:text-2xl lg:text-3xl mb-16 opacity-90 max-w-4xl mx-auto drop-shadow-lg animate-text-pop-delay">
                 Tritt Maiky's Chillout Discord bei und tauche ein in eine aktive, freundliche und stetig wachsende Community. Egal ob Gaming, spannende Umfragen oder entspannte Chats – hier bist du genau richtig!
             </p>
             <a href="https://discord.gg/Rq2rJSvs2U" target="_blank" rel="noopener noreferrer" class="btn-primary animate-pulse-btn">
-                Jetzt beitreten!
+                Jetzt auf Discord springen!
             </a>
+        </div>
+    </section>
+
+    <!-- Minecraft Server Section -->
+    <section id="minecraft" class="section-padding minecraft-section text-center pattern-bg">
+        <div class="container mx-auto px-4">
+            <h3 class="section-heading">Spiele auf unserem Minecraft Server!</h3>
+            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto">
+                Erkunde die Welt von Maiky's Chillout in Minecraft! Unser Server läuft derzeit als **Vanilla-Erlebnis**, aber wir planen spannende Updates wie **`/home` Funktionen** und viele weitere Features, um dein Abenteuer noch besser zu machen.
+            </p>
+            <div class="server-ip-box mx-auto max-w-xl">
+                <span class="server-ip-text">play.VibeCraftMc.de</span>
+                <button id="copyIpBtn" class="copy-button">IP kopieren</button>
+            </div>
+            <p id="copyMessage" class="copy-message hidden">IP erfolgreich kopiert!</p>
+            <p class="mt-8 text-lg md:text-xl text-gray-400">
+                Werde Teil des Abenteuers!
+            </p>
         </div>
     </section>
 
@@ -252,7 +294,7 @@
     </section>
 
     <!-- Call to Action / Join Section -->
-    <section id="join" class="section-padding bg-[#181818] text-white text-center border-t border-gray-800">
+    <section id="join" class="section-padding bg-[#181818] text-white text-center border-t-2 border-cyan-700">
         <div class="container mx-auto px-4">
             <h3 class="section-heading">Bereit für dein Abenteuer?</h3>
             <p class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto">
@@ -266,10 +308,32 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-950 py-10 text-center text-gray-400 text-sm border-t border-gray-800">
+    <footer class="bg-gray-950 py-10 text-center text-gray-400 text-sm border-t-2 border-gray-800">
         <div class="container mx-auto px-4">
             &copy; 2025 Maiky's Chillout. Alle Rechte vorbehalten. | <a href="#" class="hover:underline text-purple-400">Impressum</a> | <a href="#" class="hover:underline text-blue-400">Datenschutz</a>
         </div>
     </footer>
+
+    <script>
+        // JavaScript für den "IP kopieren" Button
+        document.getElementById('copyIpBtn').addEventListener('click', function() {
+            const ipAddress = "play.VibeCraftMc.de";
+            const copyMessage = document.getElementById('copyMessage');
+
+            // Verwende document.execCommand('copy') für bessere Kompatibilität in Iframes
+            const tempInput = document.createElement('textarea');
+            tempInput.value = ipAddress;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Zeige die Bestätigungsnachricht an
+            copyMessage.classList.remove('hidden');
+            setTimeout(() => {
+                copyMessage.classList.add('hidden');
+            }, 3000); // Nachricht verschwindet nach 3 Sekunden
+        });
+    </script>
 </body>
 </html>
