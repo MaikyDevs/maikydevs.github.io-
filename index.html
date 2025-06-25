@@ -1,55 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Minesweeper</title>
-    <link rel="stylesheet" href="css/main.css">
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-</head>
-<body>   
-    <div class="flex-container">
-        <div class="game-board">
-            <br>
-                <table id="board"></table>
-        </div>
-        <div id="leaderboard" class="leaderboard">
-            <h2>Top 10 Times</h2>
-            <ul></ul>
-        </div>
-    </div>
-        <section id="footer">
-            <div id="start"><img src="images/start.png"></div>
-            <div id="size-btns">
-                <div id="size-btns"><button id="size-9"><img src="images/easy.png"> Easy</button></div> 
-                <div id="size-btns"><button id="size-16"><img src="images/medium.png"> Medium</button></div> 
-                <div id="size-btns"><button id="size-30"><img src="images/hard.png"> Hard</button></div>
-            </div>
-            <div id="clock"><em>"Shift + Click"</em></strong> to toggle <img src="images/flag.png"></div>
-        </section>
-    <!-- Lade die neueste Version von Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js"></script>
-    <script>
-        // Warte bis das Dokument geladen ist
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                console.log('Initialisiere Supabase...');
-                // Initialisiere Supabase global
-                window.supabase = supabase.createClient(
-                    'https://pfehfciysulijpkbhuhf.supabase.co',
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZWhmY2l5c3VsaWpwa2JodWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDY5MzMsImV4cCI6MjA2MzkyMjkzM30.P8zgFcu17OxHwgb-b6D-qaWHTxhVtZwqvS3U8qS03f8'
-                );
-                console.log('Supabase erfolgreich initialisiert:', window.supabase);
-            } catch (err) {
-                console.error('Fehler bei der Supabase-Initialisierung:', err);
+    <title>Maiky's Chillout – Dein ultimativer Discord Server für Gaming & Community</title>
+    <meta name="description" content="Tritt Maiky's Chillout Discord bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie. Optimiert für alle Geräte.">
+    <meta name="keywords" content="Maiky's Chillout, Discord Server, Gaming Community, Minecraft, Hogwarts Legacy, Resident Evil, Umfragen, Gewinnspiele, entspannen, zocken, Freunde finden, deutsch, Community, Discord Gaming, Discord Deutschland">
+    <meta name="author" content="Maiky">
+
+    <!-- Open Graph / Social Media Meta Tags für bessere Teilbarkeit -->
+    <meta property="og:title" content="Maiky's Chillout – Dein ultimativer Discord Server">
+    <meta property="og:description" content="Tritt Maiky's Chillout Discord bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.vibecraftmc.de"> <!-- HIER DEINE TATSÄCHLICHE DOMAIN EINFÜGEN -->
+    <meta property="og:image" content="https://placehold.co/1200x630/2F3136/E0E0E0?text=Maikys%20Chillout%20Discord"> <!-- Platzhalterbild, später durch ein echtes Discord-Banner ersetzen -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Grundstile für Body und Container */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212; /* Sehr dunkler, fast schwarzer Hintergrund für Kontrast */
+            color: #E0E0E0; /* Helle Textfarbe */
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Verhindert horizontales Scrollen */
+        }
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Dynamischer Hintergrund für Hero Section */
+        @keyframes glowing-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-background-animated {
+            background: linear-gradient(270deg, #6a1a72, #7289DA, #36C3D8, #6a1a72);
+            background-size: 400% 400%;
+            animation: glowing-gradient 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-background-animated::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Button-Stile mit extremen Effekten */
+        .btn-primary {
+            @apply px-14 py-7 rounded-full font-black text-white shadow-3xl transition-all duration-400 ease-in-out;
+            background: linear-gradient(45deg, #7289DA, #A881FF); /* Discord Blau zu Lila-Akzent */
+            position: relative;
+            overflow: hidden;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 1.25rem; /* Größerer Text */
+            z-index: 1;
+            /* Leuchtender Rand */
+            box-shadow: 0 0 15px rgba(114, 137, 218, 0.6), 0 0 30px rgba(168, 129, 255, 0.4);
+        }
+        .btn-primary:hover {
+            @apply scale-105;
+            background: linear-gradient(45deg, #A881FF, #7289DA); /* Farbwechsel beim Hover */
+            box-shadow: 0 0 25px rgba(114, 137, 218, 0.8), 0 0 50px rgba(168, 129, 255, 0.6);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.7s ease-in-out;
+            opacity: 0;
+        }
+        .btn-primary:hover::before {
+            top: -20%;
+            left: -20%;
+            opacity: 1;
+        }
+        /* Pulsierender Effekt für den Hauptbutton */
+        @keyframes pulse-effect {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(114, 137, 218, 0.6); }
+            50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(114, 137, 218, 0.8), 0 0 40px rgba(168, 129, 255, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(114, 137, 218, 0.6); }
+        }
+        .animate-pulse-btn {
+            animation: pulse-effect 2.5s infinite ease-in-out;
+        }
+
+        /* Abschnittsüberschriften */
+        .section-heading {
+            font-family: 'Orbitron', sans-serif; /* Futuristischere Schrift */
+            @apply text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-16 text-center drop-shadow-lg;
+            text-shadow: 0 0 15px rgba(114, 137, 218, 0.7); /* Leuchtender Schatten */
+            line-height: 1.2;
+        }
+
+        /* Karten-Stile mit Hover-Effekten und Neon-Rändern */
+        .card {
+            background-color: #1F2124; /* Etwas dunkler als Discord Haupt-Hintergrund */
+            @apply p-8 rounded-3xl shadow-xl transform transition-all duration-500 ease-in-out;
+            border: 2px solid transparent; /* Transparenter Rahmen für Neon-Effekt */
+            position: relative;
+            overflow: hidden;
+            opacity: 0; /* Für Eintritts-Animation */
+            transform: translateY(40px); /* Für Eintritts-Animation */
+            animation: fadeInUp 0.9s ease-out forwards;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        .card:hover {
+            @apply scale-102;
+            border-image: linear-gradient(45deg, #7289DA, #FF00FF, #00FFFF) 1; /* Neon-Verlauf Rahmen */
+            transform: translateY(-10px); /* Stärkerer Hoch-Effekt */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(114, 137, 218, 0.5); /* Verbesserter Schatten mit Leuchten */
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(114, 137, 218, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Eintritts-Animation für Karten */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
             }
-        });
-    </script>
-    <script src="js/cell.js"></script>
-    <script src="js/main.js"></script>
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Delay für gestaffelte Animation */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Responsives Padding für Sektionen */
+        .section-padding {
+            @apply py-24 md:py-40;
+        }
+
+        /* Subtiles Hintergrundmuster */
+        .pattern-bg {
+            background-image: radial-gradient(#2a2a2a 1px, transparent 1px), radial-gradient(#2a2a2a 1px, transparent 1px);
+            background-size: 30px 30px; /* Größer für mehr Präsenz */
+            background-position: 0 0, 15px 15px;
+            background-blend-mode: overlay; /* Für subtileren Effekt */
+        }
+
+        /* Animation für Überschrift in Hero Section */
+        @keyframes text-pop-in {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-text-pop {
+            animation: text-pop-in 1s ease-out forwards;
+            animation-delay: 0.5s;
+            opacity: 0; /* Versteckt am Anfang */
+        }
+        .animate-text-pop-delay {
+            animation: text-pop-in 1s ease-out forwards;
+            animation-delay: 0.8s;
+            opacity: 0; /* Versteckt am Anfang */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="py-6 shadow-2xl bg-[#121212] sticky top-0 z-50 border-b border-gray-700">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-4xl lg:text-5xl font-black text-white tracking-wider font-orbitron">Maiky's Chillout</h1>
+            <div class="flex space-x-8 md:space-x-12">
+                <a href="#features" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Features</a>
+                <a href="#join" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-background-animated text-white section-padding flex-grow flex items-center justify-center text-center relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 tracking-wide drop-shadow-xl animate-text-pop">
+                Dein Portal zu<br><span class="text-purple-400 font-orbitron">Gaming & Community</span>
+            </h2>
+            <p class="text-xl md:text-2xl lg:text-3xl mb-16 opacity-90 max-w-4xl mx-auto drop-shadow-lg animate-text-pop-delay">
+                Tritt Maiky's Chillout Discord bei und tauche ein in eine aktive, freundliche und stetig wachsende Community. Egal ob Gaming, spannende Umfragen oder entspannte Chats – hier bist du genau richtig!
+            </p>
+            <a href="https://discord.gg/Rq2rJSvs2U" target="_blank" rel="noopener noreferrer" class="btn-primary animate-pulse-btn">
+                Jetzt beitreten!
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="features" class="section-padding bg-[#1A1A1D] pattern-bg">
+        <div class="container mx-auto px-4">
+            <h3 class="section-heading">Was dich bei uns erwartet</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Feature Card 1 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">🎮 Gaming-Vielfalt</h4>
+                    <p class="text-gray-300">Egal ob Minecraft, Hogwarts Legacy, Resident Evil oder ganz andere Spiele – bei uns findest du Mitspieler für deine Lieblingsgames. Tausche dich aus und entdecke Neues!</p>
+                </div>
+                <!-- Feature Card 2 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">💡 Spannende Umfragen</h4>
+                    <p class="text-gray-300">Maiky liebt Umfragen! Sei dabei, wenn wir über die nächsten Games abstimmen oder Meinungen zu aktuellen Themen sammeln. Deine Stimme zählt!</p>
+                </div>
+                <!-- Feature Card 3 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">🎁 Coole Gewinnspiele</h4>
+                    <p class="text-gray-300">Freu dich auf regelmäßige Gewinnspiele, bei denen du tolle Preise abräumen kannst. Bleib dran, es lohnt sich!</p>
+                </div>
+                <!-- Feature Card 4 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">💬 Aktiver Chat & Voice</h4>
+                    <p class="text-gray-300">Tägliche Gespräche, gemütliche Voice-Chats und eine freundliche Atmosphäre warten auf dich. Egal ob chillen oder quatschen, hier bist du richtig.</p>
+                </div>
+                <!-- Feature Card 5 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">🛠️ Hilfsbereite Moderation</h4>
+                    <p class="text-gray-300">Unser Team sorgt für eine angenehme Umgebung. Bei Fragen oder Problemen sind wir immer für dich da.</p>
+                </div>
+                <!-- Feature Card 6 -->
+                <div class="card">
+                    <h4 class="text-2xl font-bold text-white mb-4">🌱 Wachsende Community</h4>
+                    <p class="text-gray-300">Werde Teil einer stetig wachsenden Community, die Wert auf Respekt und Spaß legt. Wir freuen uns auf dich!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action / Join Section -->
+    <section id="join" class="section-padding bg-[#181818] text-white text-center border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <h3 class="section-heading">Bereit für dein Abenteuer?</h3>
+            <p class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto">
+                Klicke auf den Button, um deinem neuen Zuhause beizutreten und Maiky's Chillout zu erleben! Wir können es kaum erwarten, dich in unserer lebhaften Community willkommen zu heißen.
+            </p>
+            <a href="https://discord.gg/Rq2rJSvs2U" target="_blank" rel="noopener noreferrer" class="btn-primary animate-pulse-btn">
+                Jetzt auf Discord springen!
+            </a>
+            <p class="mt-10 text-sm opacity-80 text-gray-500">Dein Host: Maiky</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 py-10 text-center text-gray-400 text-sm border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            &copy; 2025 Maiky's Chillout. Alle Rechte vorbehalten. | <a href="#" class="hover:underline text-purple-400">Impressum</a> | <a href="#" class="hover:underline text-blue-400">Datenschutz</a>
+        </div>
+    </footer>
 </body>
 </html>
