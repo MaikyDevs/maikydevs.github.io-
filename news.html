@@ -81,7 +81,7 @@
         <nav class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-4xl lg:text-5xl font-black text-white tracking-wider font-orbitron">Maiky's Chillout</h1>
             <div class="flex space-x-6 md:space-x-12">
-                <a href="index.html#minecraft" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Minecraft</a>
+                <a href="index.html" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Home</a>
                 <a href="news.html" class="text-orange-400 font-semibold text-lg md:text-xl">News</a>
                 <a href="index.html#features" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Features</a>
                 <a href="index.html#join" class="text-white hover:text-blue-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
@@ -107,50 +107,24 @@
         </div>
     </footer>
 
-    <!-- Supabase Bibliothek zuerst laden -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Dein eigener JavaScript-Code als Modul -->
+    <!-- Dein JavaScript-Code als Modul -->
     <script type="module">
         import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
         // Supabase Konfiguration
         const SUPABASE_URL = 'https://pfehfciysulijpkbhuhf.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZWhmY2l5c3VsaWpwa2JodWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDY5MzMsImV4cCI6MjA2MzkyMjkzM30.P8zgFcu17OxHwgb-b6D-qaWHTxhVtZwqvS3U8qS03f8';
         
-        let SUPABASE_ANON_KEY = ''; // Wird aus key.txt geladen
+        // Initialisiere Supabase Client
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log("Supabase Client initialisiert."); // Zur Debugging-Hilfe
 
         // DOM-Referenzen
         const newsContainer = document.getElementById('news-container');
         const loadingMessage = document.getElementById('loading-message');
 
-        // Funktion zum Laden des Schlüssels aus key.txt
-        async function loadSupabaseKey() {
-            try {
-                const response = await fetch('key.txt'); // key.txt im selben Verzeichnis erwarten
-                if (!response.ok) {
-                    throw new Error(`Fehler beim Laden von key.txt: ${response.statusText}`);
-                }
-                SUPABASE_ANON_KEY = (await response.text()).trim();
-                console.log("Supabase API Key geladen.");
-                return true;
-            } catch (error) {
-                console.error('Fehler beim Laden des Supabase API Keys aus key.txt:', error);
-                newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase API Schlüssel konnte nicht geladen werden. Stelle sicher, dass "key.txt" existiert und den Schlüssel enthält.</p>';
-                return false;
-            }
-        }
-
         // Funktion zum Laden und Rendern der News
         async function loadAndRenderNews() {
-            const keyLoaded = await loadSupabaseKey();
-            if (!keyLoaded) {
-                return; // Abbruch, wenn der Schlüssel nicht geladen werden konnte
-            }
-
-            // Initialisiere Supabase Client, nachdem der Schlüssel geladen wurde
-            const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log("Supabase Client initialisiert."); 
-
             try {
                 // Daten aus Supabase abrufen, sortiert nach created_at absteigend
                 const { data, error } = await supabase
