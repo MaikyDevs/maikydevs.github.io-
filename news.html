@@ -3,312 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maiky's Chillout – Dein ultimativer Discord & Minecraft Server</title>
-    <meta name="description" content="Tritt Maiky's Chillout Discord & Minecraft Server bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie. Jetzt Vanilla auf 1.21.6, bald mit /home und mehr!">
-    <meta name="keywords" content="Maiky's Chillout, Discord Server, Minecraft Server, Gaming Community, Vanilla Minecraft, Minecraft 1.21.6, Minecraft Home, Umfragen, Gewinnspiele, entspannen, zocken, Freunde finden, deutsch, Community, Discord Gaming, Discord Deutschland, play.VibeCraftMc.de, News">
+    <title>News – Maiky's Chillout Discord & Minecraft Server</title>
+    <meta name="description" content="Alle Neuigkeiten und Updates von Maiky's Chillout Discord und Minecraft Server. Bleibe auf dem Laufenden über Events, Updates und Community-Highlights.">
+    <meta name="keywords" content="Maiky's Chillout, News, Updates, Discord News, Minecraft News, Server Updates, Community News, Maiky, Ankündigungen">
     <meta name="author" content="Maiky">
 
-    <!-- Open Graph / Social Media Meta Tags für bessere Teilbarkeit -->
-    <meta property="og:title" content="Maiky's Chillout – Dein ultimativer Discord & Minecraft Server">
-    <meta property="og:description" content="Tritt Maiky's Chillout Discord & Minecraft Server bei! Eine aktive Community für Gaming, Umfragen, Gewinnspiele und entspannte Chats. Finde neue Freunde und sei Teil unserer wachsenden Familie.">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="News – Maiky's Chillout">
+    <meta property="og:description" content="Alle Neuigkeiten und Updates von Maiky's Chillout Discord und Minecraft Server.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.vibecraftmc.de"> <!-- HIER DEINE TATSÄCHLICHE DOMAIN EINFÜGEN -->
-    <meta property="og:image" content="https://placehold.co/1200x630/1A1A1D/6a1a72?text=Maikys%20Chillout%20Discord%20%26%20Minecraft"> <!-- Platzhalterbild, später durch ein echtes Discord/Minecraft-Banner ersetzen -->
+    <meta property="og:url" content="https://www.vibecraftmc.de/news.html"> <!-- HIER DEINE TATSÄCHLICHE DOMAIN EINFÜGEN -->
+    <meta property="og:image" content="https://placehold.co/1200x630/1A1A1D/6a1a72?text=Maikys%20Chillout%20News">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Grundstile für Body und Container */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #0d0d0d; /* Sehr dunkler, fast schwarzer Hintergrund für extremen Kontrast */
-            color: #E0E0E0; /* Helle Textfarbe */
+            background-color: #0d0d0d;
+            color: #E0E0E0;
             scroll-behavior: smooth;
-            overflow-x: hidden; /* Verhindert horizontales Scrollen */
+            overflow-x: hidden;
         }
         .container {
             max-width: 1200px;
         }
-
-        /* Dynamischer Hintergrund für Hero Section */
-        @keyframes glowing-gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .hero-background-animated {
-            background: linear-gradient(270deg, #8A2BE2, #FF1493, #00BFFF, #8A2BE2); /* Lebhafterer, breiterer Farbverlauf */
-            background-size: 400% 400%;
-            animation: glowing-gradient 20s ease infinite; /* Sanftere, längere Animation */
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-background-animated::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%); /* Stärkerer Leuchteffekt */
-            opacity: 0.8;
-            pointer-events: none;
-        }
-
-        /* Button-Stile mit extremen Effekten */
-        .btn-primary {
-            @apply px-14 py-7 rounded-full font-black text-white shadow-3xl transition-all duration-400 ease-in-out;
-            background: linear-gradient(45deg, #7289DA, #A881FF); /* Discord Blau zu Lila-Akzent */
-            position: relative;
-            overflow: hidden;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 1.25rem; /* Größerer Text */
-            z-index: 1;
-            box-shadow: 0 0 20px rgba(114, 137, 218, 0.7), 0 0 40px rgba(168, 129, 255, 0.5); /* Stärkere Leuchtwirkung */
-        }
-        .btn-primary:hover {
-            @apply scale-105;
-            background: linear-gradient(45deg, #A881FF, #7289DA); /* Farbwechsel beim Hover */
-            box-shadow: 0 0 30px rgba(114, 137, 218, 1), 0 0 60px rgba(168, 129, 255, 0.8);
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%); /* Stärkerer Glanz */
-            transform: rotate(45deg);
-            transition: all 0.7s ease-in-out;
-            opacity: 0;
-        }
-        .btn-primary:hover::before {
-            top: -20%;
-            left: -20%;
-            opacity: 1;
-        }
-        /* Pulsierender Effekt für den Hauptbutton */
-        @keyframes pulse-effect {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(114, 137, 218, 0.7); }
-            50% { transform: scale(1.02); box-shadow: 0 0 35px rgba(114, 137, 218, 0.9), 0 0 60px rgba(168, 129, 255, 0.7); }
-            100% { transform: scale(1); box-shadow: 0 0 20px rgba(114, 137, 218, 0.7); }
-        }
-        .animate-pulse-btn {
-            animation: pulse-effect 2.8s infinite ease-in-out; /* Etwas langsamer, subtiler */
-        }
-
-        /* Abschnittsüberschriften */
         .section-heading {
-            font-family: 'Orbitron', sans-serif; /* Futuristischere Schrift */
+            font-family: 'Orbitron', sans-serif;
             @apply text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-16 text-center drop-shadow-lg;
-            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8); /* Leuchtender Schatten in Lila */
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
             line-height: 1.2;
         }
-
-        /* Karten-Stile mit Hover-Effekten und Neon-Rändern */
-        .card {
-            background-color: #1F2124; /* Etwas dunkler als Discord Haupt-Hintergrund */
-            @apply p-8 rounded-3xl shadow-xl transform transition-all duration-500 ease-in-out;
-            border: 2px solid transparent; /* Transparenter Rahmen für Neon-Effekt */
-            position: relative;
-            overflow: hidden;
-            opacity: 0; /* Für Eintritts-Animation */
-            transform: translateY(40px); /* Für Eintritts-Animation */
-            animation: fadeInUp 1s ease-out forwards; /* Längere Eintritts-Animation */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Stärkerer Schatten */
-        }
-        .card:hover {
-            @apply scale-102;
-            border-image: linear-gradient(45deg, #FF00FF, #00FFFF, #FFFF00) 1; /* Farbenfroher Neon-Verlauf Rahmen */
-            transform: translateY(-12px); /* Stärkerer Hoch-Effekt */
-            box-shadow: 0 18px 36px rgba(0,0,0,0.7), 0 0 25px rgba(255, 0, 255, 0.6); /* Verbesserter Schatten mit Leuchten */
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top left, rgba(138, 43, 226, 0.25), transparent 70%); /* Stärkerer Glanz */
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-        }
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        /* Eintritts-Animation für Karten */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        /* Delay für gestaffelte Animation */
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        
-        /* Minecraft Server Sektion spezifische Stile */
-        .minecraft-section {
-            background-color: #121212;
-            border-top: 2px solid #333;
-            border-bottom: 2px solid #333;
-        }
-        .server-ip-box {
-            background-color: #282B30;
-            border: 2px solid #4CAF50; /* Minecraft-Grün als Akzent */
-            @apply p-6 rounded-xl flex flex-col md:flex-row items-center justify-center gap-4 shadow-lg;
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5); /* Grüner Leuchteffekt */
-        }
-        .server-ip-text {
-            font-family: 'Orbitron', sans-serif;
-            @apply text-3xl md:text-4xl font-bold text-green-400;
-            text-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
-        }
-        .copy-button {
-            @apply px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold transition-colors duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75;
-        }
-        .copy-message {
-            @apply text-sm text-green-400 mt-2;
-        }
-
-        /* Responsives Padding für Sektionen */
         .section-padding {
             @apply py-24 md:py-40;
         }
-
-        /* Subtiles Hintergrundmuster */
         .pattern-bg {
             background-image: radial-gradient(rgba(42, 42, 42, 0.8) 1px, transparent 1px), radial-gradient(rgba(42, 42, 42, 0.8) 1px, transparent 1px);
-            background-size: 35px 35px; /* Größer für mehr Präsenz */
+            background-size: 35px 35px;
             background-position: 0 0, 17.5px 17.5px;
-            background-blend-mode: overlay; /* Für subtileren Effekt */
+            background-blend-mode: overlay;
         }
-
-        /* Animation für Überschrift in Hero Section */
-        @keyframes text-pop-in {
-            0% { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(5px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        .news-article {
+            background-color: #1F2124;
+            @apply p-8 rounded-3xl shadow-xl mb-10 transform transition-all duration-300 ease-in-out;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-        .animate-text-pop {
-            animation: text-pop-in 1.2s ease-out forwards;
-            animation-delay: 0.5s;
-            opacity: 0; /* Versteckt am Anfang */
+        .news-article:hover {
+            border-image: linear-gradient(45deg, #FF00FF, #00FFFF) 1;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
         }
-        .animate-text-pop-delay {
-            animation: text-pop-in 1.2s ease-out forwards;
-            animation-delay: 0.8s;
-            opacity: 0; /* Versteckt am Anfang */
+        .news-title {
+            @apply text-3xl font-bold text-white mb-3;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .news-meta {
+            @apply text-gray-400 text-sm mb-4;
+        }
+        .news-content {
+            @apply text-gray-300 leading-relaxed;
+        }
+        /* Sticky Header */
+        header {
+            background-color: #0d0d0d;
+            border-bottom: 2px solid #8A2BE2; /* Passend zum Hero */
+        }
+        nav a {
+            @apply text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Header/Navigation -->
+    <!-- Header/Navigation (wie auf der Startseite) -->
     <header class="py-6 shadow-2xl bg-[#0d0d0d] sticky top-0 z-50 border-b-2 border-purple-800">
         <nav class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-4xl lg:text-5xl font-black text-white tracking-wider font-orbitron">Maiky's Chillout</h1>
             <div class="flex space-x-6 md:space-x-12">
-                <a href="#minecraft" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Minecraft</a>
-                <a href="news.html" class="text-white hover:text-orange-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">News</a> <!-- Neuer News Button -->
-                <a href="#features" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Features</a>
-                <a href="#join" class="text-white hover:text-blue-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
+                <a href="index.html#minecraft" class="text-white hover:text-green-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Minecraft</a>
+                <a href="news.html" class="text-orange-400 font-semibold text-lg md:text-xl">News</a>
+                <a href="index.html#features" class="text-white hover:text-purple-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Features</a>
+                <a href="index.html#join" class="text-white hover:text-blue-400 transition-colors duration-300 font-semibold text-lg md:text-xl transform hover:scale-105">Beitreten</a>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-background-animated text-white section-padding flex-grow flex items-center justify-center text-center relative">
-        <div class="container mx-auto px-4 relative z-10">
-            <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 tracking-wide drop-shadow-xl animate-text-pop">
-                Dein Portal zu<br><span class="text-green-400 font-orbitron">Gaming & Community</span>
-            </h2>
-            <p class="text-xl md:text-2xl lg:text-3xl mb-16 opacity-90 max-w-4xl mx-auto drop-shadow-lg animate-text-pop-delay">
-                Tritt Maiky's Chillout Discord bei und tauche ein in eine aktive, freundliche und stetig wachsende Community. Egal ob Gaming, spannende Umfragen oder entspannte Chats – hier bist du genau richtig!
-            </p>
-            <a href="https://discord.gg/Rq2rJSvs2U" target="_blank" rel="noopener noreferrer" class="btn-primary animate-pulse-btn">
-                Jetzt auf Discord springen!
-            </a>
-        </div>
-    </section>
-
-    <!-- Minecraft Server Section -->
-    <section id="minecraft" class="section-padding minecraft-section text-center pattern-bg">
+    <!-- News Section -->
+    <section class="section-padding bg-[#121212] pattern-bg flex-grow">
         <div class="container mx-auto px-4">
-            <h3 class="section-heading">Spiele auf unserem Minecraft Server!</h3>
-            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto">
-                Erkunde die Welt von Maiky's Chillout in Minecraft! Unser Server läuft derzeit als **Vanilla-Erlebnis** auf der Version **1.21.6**, aber wir planen spannende Updates wie **`/home` Funktionen** und viele weitere Features, um dein Abenteuer noch besser zu machen.
-            </p>
-            <div class="server-ip-box mx-auto max-w-xl">
-                <span class="server-ip-text">play.VibeCraftMc.de</span>
-                <button id="copyIpBtn" class="copy-button">IP kopieren</button>
-            </div>
-            <p id="copyMessage" class="copy-message hidden">IP erfolgreich kopiert!</p>
-            <p class="mt-8 text-lg md:text-xl text-gray-400">
-                Werde Teil des Abenteuers!
-            </p>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="features" class="section-padding bg-[#1A1A1D] pattern-bg">
-        <div class="container mx-auto px-4">
-            <h3 class="section-heading">Was dich bei uns erwartet</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Feature Card 1 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">🎮 Gaming-Vielfalt</h4>
-                    <p class="text-gray-300">Egal ob Minecraft, Hogwarts Legacy, Resident Evil oder ganz andere Spiele – bei uns findest du Mitspieler für deine Lieblingsgames. Tausche dich aus und entdecke Neues!</p>
-                </div>
-                <!-- Feature Card 2 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">💡 Spannende Umfragen</h4>
-                    <p class="text-gray-300">Maiky liebt Umfragen! Sei dabei, wenn wir über die nächsten Games abstimmen oder Meinungen zu aktuellen Themen sammeln. Deine Stimme zählt!</p>
-                </div>
-                <!-- Feature Card 3 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">🎁 Coole Gewinnspiele</h4>
-                    <p class="text-gray-300">Freu dich auf regelmäßige Gewinnspiele, bei denen du tolle Preise abräumen kannst. Bleib dran, es lohnt sich!</p>
-                </div>
-                <!-- Feature Card 4 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">💬 Aktiver Chat & Voice</h4>
-                    <p class="text-gray-300">Tägliche Gespräche, gemütliche Voice-Chats und eine freundliche Atmosphäre warten auf dich. Egal ob chillen oder quatschen, hier bist du richtig.</p>
-                </div>
-                <!-- Feature Card 5 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">🛠️ Hilfsbereite Moderation</h4>
-                    <p class="text-gray-300">Unser Team sorgt für eine angenehme Umgebung. Bei Fragen oder Problemen sind wir immer für dich da.</p>
-                </div>
-                <!-- Feature Card 6 -->
-                <div class="card">
-                    <h4 class="text-2xl font-bold text-white mb-4">🌱 Wachsende Community</h4>
-                    <p class="text-gray-300">Werde Teil einer stetig wachsenden Community, die Wert auf Respekt und Spaß legt. Wir freuen uns auf dich!</p>
-                </div>
+            <h2 class="section-heading">Aktuelle News & Updates</h2>
+            <div id="news-container">
+                <!-- News articles will be loaded here by JavaScript -->
+                <p class="text-center text-gray-400 text-xl" id="loading-message">Lade Nachrichten...</p>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action / Join Section -->
-    <section id="join" class="section-padding bg-[#181818] text-white text-center border-t-2 border-cyan-700">
-        <div class="container mx-auto px-4">
-            <h3 class="section-heading">Bereit für dein Abenteuer?</h3>
-            <p class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto">
-                Klicke auf den Button, um deinem neuen Zuhause beizutreten und Maiky's Chillout zu erleben! Wir können es kaum erwarten, dich in unserer lebhaften Community willkommen zu heißen.
-            </p>
-            <a href="https://discord.gg/Rq2rJSvs2U" target="_blank" rel="noopener noreferrer" class="btn-primary animate-pulse-btn">
-                Jetzt auf Discord springen!
-            </a>
-            <p class="mt-10 text-sm opacity-80 text-gray-500">Dein Host: Maiky</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- Footer (wie auf der Startseite) -->
     <footer class="bg-gray-950 py-10 text-center text-gray-400 text-sm border-t-2 border-gray-800">
         <div class="container mx-auto px-4">
             &copy; 2025 Maiky's Chillout. Alle Rechte vorbehalten. | <a href="#" class="hover:underline text-purple-400">Impressum</a> | <a href="#" class="hover:underline text-blue-400">Datenschutz</a>
@@ -316,24 +107,40 @@
     </footer>
 
     <script>
-        // JavaScript für den "IP kopieren" Button
-        document.getElementById('copyIpBtn').addEventListener('click', function() {
-            const ipAddress = "play.VibeCraftMc.de";
-            const copyMessage = document.getElementById('copyMessage');
+        document.addEventListener('DOMContentLoaded', async () => {
+            const newsContainer = document.getElementById('news-container');
+            const loadingMessage = document.getElementById('loading-message');
 
-            // Verwende document.execCommand('copy') für bessere Kompatibilität in Iframes
-            const tempInput = document.createElement('textarea');
-            tempInput.value = ipAddress;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
+            try {
+                const response = await fetch('news.json'); // Pfad zur JSON-Datei
+                if (!response.ok) {
+                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                }
+                const news = await response.json();
 
-            // Zeige die Bestätigungsnachricht an
-            copyMessage.classList.remove('hidden');
-            setTimeout(() => {
-                copyMessage.classList.add('hidden');
-            }, 3000); // Nachricht verschwindet nach 3 Sekunden
+                if (news.length === 0) {
+                    newsContainer.innerHTML = '<p class="text-center text-gray-400 text-xl">Aktuell keine Nachrichten verfügbar.</p>';
+                    return;
+                }
+
+                newsContainer.innerHTML = ''; // Lade-Nachricht entfernen
+
+                // Nachrichten in umgekehrter Reihenfolge anzeigen (neueste zuerst)
+                news.reverse().forEach(article => {
+                    const newsArticleDiv = document.createElement('div');
+                    newsArticleDiv.className = 'news-article';
+                    newsArticleDiv.innerHTML = `
+                        <h4 class="news-title">${article.title}</h4>
+                        <p class="news-meta">Veröffentlicht: ${article.date}</p>
+                        <p class="news-content">${article.content}</p>
+                    `;
+                    newsContainer.appendChild(newsArticleDiv);
+                });
+
+            } catch (error) {
+                console.error('Fehler beim Laden der Nachrichten:', error);
+                newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler beim Laden der Nachrichten. Bitte versuche es später erneut.</p>';
+            }
         });
     </script>
 </body>
