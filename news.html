@@ -108,6 +108,7 @@
 
     <!-- Supabase Bibliothek zuerst laden -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Dein eigener JavaScript-Code direkt danach -->
     <script>
         // Supabase Konfiguration
@@ -121,14 +122,15 @@
 
             try {
                 // Überprüfen, ob Supabase definiert ist, bevor createClient aufgerufen wird
-                if (typeof Supabase === 'undefined' || Supabase === null) {
-                    console.error("Supabase ist nicht definiert. Die Bibliothek wurde möglicherweise nicht geladen oder nicht richtig initialisiert.");
-                    newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nicht geladen werden. Bitte versuche es später erneut oder überprüfe deine Internetverbindung.</p>';
+                // (redundant nach setInterval-Logik, aber schadet nicht)
+                if (typeof window.Supabase === 'undefined' || window.Supabase === null) {
+                    console.error("Supabase ist immer noch nicht definiert, obwohl es geladen sein sollte. Dies ist ein unerwarteter Zustand.");
+                    newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nicht richtig initialisiert werden. Bitte versuche es später erneut.</p>';
                     return;
                 }
 
-                const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log("Supabase Client initialisiert.");
+                const supabase = window.Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log("Supabase Client initialisiert."); // Zur Debugging-Hilfe
 
                 // Daten aus Supabase abrufen, sortiert nach created_at absteigend
                 const { data, error } = await supabase
@@ -150,6 +152,7 @@
                 data.forEach(article => {
                     const newsArticleDiv = document.createElement('div');
                     newsArticleDiv.className = 'news-article';
+                    // Das Datum formatieren
                     const displayDate = article.date ? new Date(article.date).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unbekanntes Datum';
                     
                     newsArticleDiv.innerHTML = `
@@ -162,39 +165,42 @@
 
             } catch (error) {
                 console.error('Fehler beim Laden der Nachrichten:', error);
-                newsContainer.innerHTML = `<p class="text-center text-red-400 text-xl">Fehler beim Laden der Nachrichten: ${error.message}. Bitte stelle sicher, dass die Supabase-Tabelle 'news' korrekt eingerichtet ist.</p>`;
+                newsContainer.innerHTML = `<p class="text-center text-red-400 text-xl">Fehler beim Laden der Nachrichten: ${error.message}. Bitte stelle sicher, dass die Supabase-Tabelle 'news' korrekt eingerichtet ist und du die richtigen Zugriffsrechte hast.</p>`;
             }
         }
 
-        // Führe die Initialisierung und das Laden der News aus, sobald das DOM geladen ist.
-        document.addEventListener('DOMContentLoaded', initializeSupabaseAndLoadNews);
+        // Aktiver Check-Mechanismus, um sicherzustellen, dass Supabase geladen ist
+        let checkSupabaseAttempts = 0;
+        const maxCheckAttempts = 40; // Max. 20 Sekunden warten (40 * 500ms)
+        const checkInterval = 500; // Alle 500ms prüfen
 
-        // Fallback-Mechanismus für langsame Ladezeiten oder Skriptausführungsreihenfolge
-        // Überprüft alle 500ms, ob Supabase definiert ist, bis zu 10 Versuche.
-        let checkSupabaseInterval = null;
-        let checksCount = 0;
-        const maxChecks = 20; // Max 10 Sekunden warten (20 * 500ms)
-
-        checkSupabaseInterval = setInterval(() => {
-            if (typeof Supabase !== 'undefined' && Supabase !== null) {
-                clearInterval(checkSupabaseInterval); // Stop checking once found
-                if (checksCount > 0) { // Only re-initialize if DOMContentLoaded already fired and it was missed
-                    // If DOMContentLoaded already fired, but Supabase was not ready, initialize now.
-                    // This is a failsafe.
-                    initializeSupabaseAndLoadNews();
-                }
+        const supabaseChecker = setInterval(() => {
+            if (typeof window.Supabase !== 'undefined' && window.Supabase !== null) {
+                clearInterval(supabaseChecker); // Stop checking
+                initializeSupabaseAndLoadNews(); // Initialize and load news
             } else {
-                checksCount++;
-                if (checksCount >= maxChecks) {
-                    clearInterval(checkSupabaseInterval);
-                    console.error("Supabase wurde nach maximaler Wartezeit nicht definiert.");
-                    document.getElementById('news-container').innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nicht geladen werden. Bitte versuche es später erneut oder überprüfe deine Internetverbindung.</p>';
+                checkSupabaseAttempts++;
+                if (checkSupabaseAttempts >= maxCheckAttempts) {
+                    clearInterval(supabaseChecker);
+                    console.error("Supabase wurde nach maximaler Wartezeit nicht im globalen Scope gefunden.");
+                    document.getElementById('news-container').innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nach langer Wartezeit nicht geladen werden. Überprüfe deine Internetverbindung oder Adblocker.</p>';
                 }
             }
-        }, 500); // Check every 500ms
+        }, checkInterval);
 
-        // Sollte DOMContentLoaded vor dem Intervall feuern, wird initializeSupabaseAndLoadNews direkt aufgerufen
-        // und das Intervall sollte dann finden, dass Supabase definiert ist und sich selbst beenden.
+        // Fallback: Wenn DOMContentLoaded schon gefeuert hat, aber der Checker noch läuft (sehr unwahrscheinlich nach obiger Optimierung)
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.Supabase !== 'undefined' && window.Supabase !== null) {
+                 // Wenn Supabase hier schon definiert ist, und der Checker noch läuft (was er nicht sollte),
+                 // dann ist alles in Ordnung, die initialize-Funktion wird durch den Checker aufgerufen
+                 // oder wurde bereits aufgerufen, falls der Checker schon fertig war.
+            } else {
+                // Wenn DOMContentLoaded gefeuert hat und Supabase immer noch nicht da ist,
+                // dann sollte der setInterval den Fehler abfangen.
+                // Wir initialisieren hier nicht direkt, um Race Conditions zu vermeiden,
+                // der setInterval ist der primäre Trigger.
+            }
+        });
     </script>
 </body>
 </html>
