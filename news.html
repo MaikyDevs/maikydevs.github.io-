@@ -18,6 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Grundstile und "2025" Design wie zuvor */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #0d0d0d;
@@ -106,35 +107,28 @@
         </div>
     </footer>
 
-    <!-- Supabase Bibliothek zuerst laden -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Dein eigener JavaScript-Code direkt danach -->
-    <script>
+    <!-- Dein JavaScript-Code als Modul -->
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
         // Supabase Konfiguration
         const SUPABASE_URL = 'https://pfehfciysulijpkbhuhf.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZWhmY2l5c3VsaWpwa2JodWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDY5MzMsImV4cCI6MjA2MzkyMjkzM30.P8zgFcu17OxHwgb-b6D-qaWHTxhVtZwqvS3U8qS03f8';
         
-        // Funktion zum Initialisieren des Supabase Clients und Laden der News
-        async function initializeSupabaseAndLoadNews() {
-            const newsContainer = document.getElementById('news-container');
-            const loadingMessage = document.getElementById('loading-message');
+        // Initialisiere Supabase Client
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log("Supabase Client initialisiert."); // Zur Debugging-Hilfe
 
+        // DOM-Referenzen
+        const newsContainer = document.getElementById('news-container');
+        const loadingMessage = document.getElementById('loading-message');
+
+        // Funktion zum Laden und Rendern der News
+        async function loadAndRenderNews() {
             try {
-                // Überprüfen, ob Supabase definiert ist, bevor createClient aufgerufen wird
-                // (redundant nach setInterval-Logik, aber schadet nicht)
-                if (typeof window.Supabase === 'undefined' || window.Supabase === null) {
-                    console.error("Supabase ist immer noch nicht definiert, obwohl es geladen sein sollte. Dies ist ein unerwarteter Zustand.");
-                    newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nicht richtig initialisiert werden. Bitte versuche es später erneut.</p>';
-                    return;
-                }
-
-                const supabase = window.Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log("Supabase Client initialisiert."); // Zur Debugging-Hilfe
-
                 // Daten aus Supabase abrufen, sortiert nach created_at absteigend
                 const { data, error } = await supabase
-                    .from('news')
+                    .from('news') // Stelle sicher, dass der Tabellenname korrekt ist (hier 'news')
                     .select('*')
                     .order('created_at', { ascending: false }); // Neueste zuerst
 
@@ -169,38 +163,8 @@
             }
         }
 
-        // Aktiver Check-Mechanismus, um sicherzustellen, dass Supabase geladen ist
-        let checkSupabaseAttempts = 0;
-        const maxCheckAttempts = 40; // Max. 20 Sekunden warten (40 * 500ms)
-        const checkInterval = 500; // Alle 500ms prüfen
-
-        const supabaseChecker = setInterval(() => {
-            if (typeof window.Supabase !== 'undefined' && window.Supabase !== null) {
-                clearInterval(supabaseChecker); // Stop checking
-                initializeSupabaseAndLoadNews(); // Initialize and load news
-            } else {
-                checkSupabaseAttempts++;
-                if (checkSupabaseAttempts >= maxCheckAttempts) {
-                    clearInterval(supabaseChecker);
-                    console.error("Supabase wurde nach maximaler Wartezeit nicht im globalen Scope gefunden.");
-                    document.getElementById('news-container').innerHTML = '<p class="text-center text-red-400 text-xl">Fehler: Supabase-Bibliothek konnte nach langer Wartezeit nicht geladen werden. Überprüfe deine Internetverbindung oder Adblocker.</p>';
-                }
-            }
-        }, checkInterval);
-
-        // Fallback: Wenn DOMContentLoaded schon gefeuert hat, aber der Checker noch läuft (sehr unwahrscheinlich nach obiger Optimierung)
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof window.Supabase !== 'undefined' && window.Supabase !== null) {
-                 // Wenn Supabase hier schon definiert ist, und der Checker noch läuft (was er nicht sollte),
-                 // dann ist alles in Ordnung, die initialize-Funktion wird durch den Checker aufgerufen
-                 // oder wurde bereits aufgerufen, falls der Checker schon fertig war.
-            } else {
-                // Wenn DOMContentLoaded gefeuert hat und Supabase immer noch nicht da ist,
-                // dann sollte der setInterval den Fehler abfangen.
-                // Wir initialisieren hier nicht direkt, um Race Conditions zu vermeiden,
-                // der setInterval ist der primäre Trigger.
-            }
-        });
+        // Starte das Laden der News, sobald das DOM vollständig geladen ist
+        document.addEventListener('DOMContentLoaded', loadAndRenderNews);
     </script>
 </body>
 </html>
