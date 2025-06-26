@@ -106,32 +106,48 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // Supabase Konfiguration - Der Schlüssel ist öffentlich sichtbar und für Lesezugriff gedacht.
+        const SUPABASE_URL = 'https://pfehfciysulijpkbhuhf.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZWhmY2l5c3VsaWpwa2JodWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDY5MzMsImV4cCI6MjA2MzkyMjkzM30.P8zgFcu17OxHwgb-b6D-qaWHTxhVtZwqvS3U8qS03f8';
+        let supabase; // Deklariere supabase, initialisiere es aber erst später
+
         document.addEventListener('DOMContentLoaded', async () => {
+            // Initialisiere Supabase erst, wenn das DOM vollständig geladen ist
+            supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log("Supabase Client initialisiert."); // Zur Debugging-Hilfe
+
             const newsContainer = document.getElementById('news-container');
             const loadingMessage = document.getElementById('loading-message');
 
             try {
-                const response = await fetch('news.json'); // Pfad zur JSON-Datei
-                if (!response.ok) {
-                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-                }
-                const news = await response.json();
+                // Daten aus Supabase abrufen, sortiert nach created_at absteigend
+                const { data, error } = await supabase
+                    .from('news')
+                    .select('*')
+                    .order('created_at', { ascending: false }); // Neueste zuerst
 
-                if (news.length === 0) {
+                if (error) {
+                    throw error;
+                }
+
+                if (!data || data.length === 0) {
                     newsContainer.innerHTML = '<p class="text-center text-gray-400 text-xl">Aktuell keine Nachrichten verfügbar.</p>';
                     return;
                 }
 
                 newsContainer.innerHTML = ''; // Lade-Nachricht entfernen
 
-                // Nachrichten in umgekehrter Reihenfolge anzeigen (neueste zuerst)
-                news.reverse().forEach(article => {
+                data.forEach(article => {
                     const newsArticleDiv = document.createElement('div');
                     newsArticleDiv.className = 'news-article';
+                    // Das Datum formatieren
+                    const displayDate = article.date ? new Date(article.date).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unbekanntes Datum';
+                    
                     newsArticleDiv.innerHTML = `
                         <h4 class="news-title">${article.title}</h4>
-                        <p class="news-meta">Veröffentlicht: ${article.date}</p>
+                        <p class="news-meta">Veröffentlicht: ${displayDate}</p>
                         <p class="news-content">${article.content}</p>
                     `;
                     newsContainer.appendChild(newsArticleDiv);
@@ -139,7 +155,7 @@
 
             } catch (error) {
                 console.error('Fehler beim Laden der Nachrichten:', error);
-                newsContainer.innerHTML = '<p class="text-center text-red-400 text-xl">Fehler beim Laden der Nachrichten. Bitte versuche es später erneut.</p>';
+                newsContainer.innerHTML = `<p class="text-center text-red-400 text-xl">Fehler beim Laden der Nachrichten: ${error.message}. Bitte stelle sicher, dass die Supabase-Tabelle 'news' korrekt eingerichtet ist.</p>`;
             }
         });
     </script>
