@@ -1,0 +1,29 @@
+/* Login Seite */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #181818;
+  color: white;
+}
+
+.login-container {
+  text-align: center;
+  background: #202020;
+  padding: 30px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.google-btn {
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.google-btn:hover {
+  background: #ddd;
+}
