@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - MyTube</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <h1>Willkommen bei MyTube</h1>
+    <p>Melde dich an, um Videos hochzuladen & zu sehen</p>
+    <button id="googleLogin" class="google-btn">Mit Google anmelden</button>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    const SUPABASE_URL = "https://dcynncolcolrergzripo.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjeW5uY29sY29scmVyZ3pyaXBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MTYxNDEsImV4cCI6MjA3MjQ5MjE0MX0.kIJQd-nvJJH20LJEPiVpNq7NKCUbPqmkibzFIPLr2Ec";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById("googleLogin").addEventListener("click", async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/index.html"
+        }
+      });
+      if (error) console.error("Login Error:", error.message);
+    });
+  </script>
+</body>
+</html>
